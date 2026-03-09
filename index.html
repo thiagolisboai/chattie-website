@@ -1,0 +1,2562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chattie — O Chattie conversa. Automação apenas envia mensagens.</title>
+  <link rel="icon" type="image/png" href="brand_assets/Black Chattie - Face Symbol.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Sherika';
+      src: url('fonts/Sherika-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Sherika';
+      src: url('fonts/Sherika-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Sherika';
+      src: url('fonts/Sherika-ExtraBold.ttf') format('truetype');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Sherika';
+      src: url('fonts/Sherika-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --cream:    #FAFBF3;
+      --black:    #000000;
+      --white:    #FFFFFF;
+      --lavender: #E4C1F9;
+      --orange:   #F4B13F;
+      --rust:     #E57B33;
+      --brand:    #E8572A;
+      --dark:     #111111;
+      --cyan:     #66BAC6;
+      --teal:     #2F6451;
+      --sage:     #B7C3B0;
+
+      --border:       1px solid var(--black);
+      --border-card:  2px solid var(--black);
+      --shadow:       4px 4px 0 var(--black);
+      --shadow-lg:    6px 6px 0 var(--black);
+      --radius:       8px;
+      --font:         'Barlow', sans-serif;
+      --font-display: 'Sherika', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--cream);
+      color: var(--black);
+      font-size: 1rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ── UTILS ─────────────────────────────────── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    .card {
+      background: var(--white);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: var(--border-card);
+      border-radius: 100px;
+      padding: 0.6rem 1.4rem;
+      min-height: 44px;
+      transition: transform 0.12s cubic-bezier(0.16,1,0.3,1), box-shadow 0.12s cubic-bezier(0.16,1,0.3,1);
+      text-decoration: none;
+    }
+    .btn:hover  { transform: translate(-2px,-2px) scale(1.02); box-shadow: var(--shadow); }
+    .btn:active { transform: translate(1px,1px) scale(0.98); box-shadow: none; }
+    .btn:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
+
+    .btn-black    { background: var(--black); color: var(--white); }
+    .btn-black:hover { box-shadow: var(--shadow-lg); }
+    .btn-brand    { background: var(--brand); color: var(--white); box-shadow: var(--shadow); }
+    .btn-brand:hover { box-shadow: var(--shadow-lg); background: #cc4d26; }
+    .btn-rust     { background: var(--rust); color: var(--black); box-shadow: var(--shadow); }
+    .btn-rust:hover { box-shadow: var(--shadow-lg); }
+    .btn-orange   { background: var(--orange); color: var(--black); box-shadow: var(--shadow); }
+    .btn-orange:hover { box-shadow: var(--shadow-lg); }
+    .btn-lavender { background: var(--lavender); color: var(--black); box-shadow: var(--shadow); }
+    .btn-cyan     { background: var(--cyan); color: var(--black); box-shadow: var(--shadow); }
+    .btn-white    { background: var(--white); color: var(--black); box-shadow: var(--shadow); }
+    .btn-outline  { background: transparent; color: var(--black); }
+    .btn-dark     { background: var(--dark); color: var(--white); box-shadow: var(--shadow); }
+    .btn-dark:hover { box-shadow: var(--shadow-lg); }
+    .btn-teal     { background: var(--teal); color: var(--white); box-shadow: var(--shadow); }
+    .btn-teal:hover { box-shadow: var(--shadow-lg); background: #255240; }
+
+    /* ── NAV ────────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--cream);
+      border-bottom: var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; }
+    .nav-links a:hover { text-decoration: underline; }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-login { font-size: 0.9rem; font-weight: 500; }
+    .nav-login:hover { text-decoration: underline; }
+
+    /* ── SECTION COMMON ─────────────────────────── */
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #777;
+      margin-bottom: 0.75rem;
+    }
+    .section-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 3.8vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+    .section-header { margin-bottom: 3.5rem; }
+
+    /* ── ANIMATIONS ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes mascotBob {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50%       { transform: translateY(-14px) rotate(1.5deg); }
+    }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(47,100,81,0.5); }
+      50%       { box-shadow: 0 0 0 6px rgba(47,100,81,0); }
+    }
+
+    .hero-left .hero-badge        { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0ms   both; }
+    .hero-left .hero-headline     { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 120ms both; }
+    .hero-left .hero-sub          { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 240ms both; }
+    .hero-left .hero-cta          { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 360ms both; }
+    .hero-left .hero-trust        { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 440ms both; }
+    .hero-left .hero-social-proof { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 520ms both; }
+    .hero-right                   { /* no block animation — chat always visible */ }
+
+    /* Scroll Reveal — hidden state applied via JS only */
+    .reveal {
+      transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.pre-reveal {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero-wrapper {
+      background-color: var(--cream);
+      background-image: url('brand_assets/Orange Gradient BG.png');
+      background-size: 55% auto;
+      background-position: top right;
+      background-repeat: no-repeat;
+      border-bottom: var(--border);
+    }
+    .hero {
+      padding: 4.5rem 1.5rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 55fr 45fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .hero-left { display: flex; flex-direction: column; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: #555;
+      margin-bottom: 1.75rem;
+      width: fit-content;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      max-width: 660px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--rust);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 400;
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      color: #2a2a2a;
+    }
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.875rem;
+    }
+    .hero-trust {
+      font-size: 0.78rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    .hero-social-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--white);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      line-height: 1.4;
+      width: fit-content;
+    }
+    .hero-social-proof-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+      animation: pulseDot 2.2s ease-in-out infinite;
+    }
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-mascot {
+      width: min(320px, 90%);
+      height: auto;
+      animation: mascotBob 3.5s ease-in-out infinite;
+      filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.1));
+    }
+
+    /* ── PROBLEM ────────────────────────────────── */
+    .problem-wrapper {
+      background: var(--black);
+      border-bottom: var(--border);
+    }
+    .problem-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      color: var(--white);
+    }
+    .problem-section .section-eyebrow { color: var(--orange); }
+    .problem-section .section-headline { color: var(--white); }
+    .problem-section .section-sub { color: #aaa; }
+    .problem-scene {
+      background: #0e0e0e;
+      color: var(--white);
+      border: 1px solid #2a2a2a;
+      border-left: 4px solid var(--rust);
+      border-radius: var(--radius);
+      padding: 2.5rem 3rem;
+      margin-bottom: 2rem;
+      max-width: 680px;
+    }
+    .problem-scene p {
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+    .problem-scene p:last-child { margin-bottom: 0; }
+    .problem-scene .scene-time {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    .problem-scene .scene-verdict {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #2a2a2a;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--sage);
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .pain-card {
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .pain-card-icon { font-size: 1.75rem; line-height: 1; color: var(--black); }
+    .pain-card-icon svg { display: block; }
+    .pain-card-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--black);
+    }
+    .pain-card-body {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #2a2a2a;
+    }
+    .problem-remate {
+      background: var(--orange);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem 2.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--black);
+    }
+
+    /* ── HOW IT WORKS ───────────────────────────── */
+    .how-section {
+      padding: 7.5rem 1.5rem;
+      border-bottom: var(--border);
+      background: var(--cream);
+    }
+    .how-inner { max-width: 1200px; margin: 0 auto; }
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      border: var(--border-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .how-step {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      border-bottom: 1px solid var(--black);
+    }
+    .how-step:last-child { border-bottom: none; }
+    .how-step-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1;
+      border-right: 1px solid var(--black);
+      padding: 2.5rem 1.5rem;
+    }
+    .how-step-content {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .how-step-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .how-step-body {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #333;
+      max-width: 560px;
+    }
+    .how-step-cta {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-top: 0.25rem;
+    }
+    .how-step:nth-child(1) .how-step-num { background: var(--lavender); color: var(--black); }
+    .how-step:nth-child(2) .how-step-num { background: var(--cyan);     color: var(--black); }
+    .how-step:nth-child(3) .how-step-num { background: var(--orange);   color: var(--black); }
+
+    /* ── SANDBOX ────────────────────────────────── */
+    .sandbox-wrapper {
+      background-color: var(--teal);
+      background-image:
+        radial-gradient(ellipse at 90% 15%, rgba(102,186,198,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 85%, rgba(183,195,176,0.2) 0%, transparent 50%);
+      color: var(--white);
+      border-top: var(--border);
+      border-bottom: var(--border);
+    }
+    .sandbox-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .sandbox-section .section-eyebrow { color: var(--orange); }
+    .sandbox-section .section-headline { color: var(--white); max-width: 720px; }
+    .sandbox-section .section-sub { color: rgba(255,255,255,0.65); }
+    .sandbox-unique-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--orange);
+      color: var(--black);
+      border: var(--border-card);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+    .sandbox-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .sandbox-story {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+    }
+    .sandbox-story p { margin-bottom: 1rem; }
+    .sandbox-story p:last-child { margin-bottom: 0; }
+    .sandbox-story em { color: var(--orange); font-style: normal; font-weight: 600; }
+    .sandbox-right { display: flex; flex-direction: column; gap: 1rem; }
+    .sandbox-how {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .sandbox-how-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+    .sandbox-how p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.75);
+    }
+    .sandbox-eliminates {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .sandbox-eliminates-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sage);
+      margin-bottom: 1rem;
+    }
+    .sandbox-elim-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .sandbox-elim-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+    .sandbox-elim-list li .elim-icon { flex-shrink: 0; margin-top: 0.05rem; }
+
+    /* ── TICKER ─────────────────────────────────── */
+    .ticker {
+      border-top: var(--border);
+      border-bottom: var(--border);
+      padding: 1rem 0;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: scroll 28s linear infinite;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 1.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      border-right: var(--border);
+    }
+    .ticker-icon { font-size: 1.1rem; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── HOW IT WORKS — MICRO OUTCOMES ─────────── */
+    .how-step-outcome {
+      display: inline-block;
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--teal);
+      background: rgba(47,100,81,0.08);
+      border-radius: 4px;
+      padding: 0.35rem 0.75rem;
+    }
+
+    /* ── DIFERENCIAÇÃO ──────────────────────────── */
+    .diff-wrapper {
+      background: var(--dark);
+      border-bottom: var(--border);
+    }
+    .diff-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .diff-section .section-eyebrow { color: var(--orange); }
+    .diff-section .section-headline { color: var(--white); }
+    .diff-section .section-sub { color: rgba(255,255,255,0.6); }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .diff-card {
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--white);
+    }
+    .diff-card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .diff-card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .diff-card-desc {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #444;
+      flex: 1;
+    }
+    .diff-card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .diff-card-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      line-height: 1.4;
+    }
+    .diff-card-features .icon-bad  { color: #c00; flex-shrink: 0; }
+    .diff-card-features .icon-good { color: var(--teal); font-weight: 800; flex-shrink: 0; }
+    .diff-card.diff-hero {
+      background: var(--teal);
+      color: var(--white);
+      box-shadow: var(--shadow-lg);
+    }
+    .diff-card.diff-hero .diff-card-label { color: var(--sage); }
+    .diff-card.diff-hero .diff-card-desc { color: #cde3d8; }
+    .diff-card.diff-hero .diff-card-features li { color: var(--white); }
+    .diff-card-price {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+    .diff-remate {
+      margin-top: 2rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+      font-weight: 700;
+      background: var(--orange);
+      color: var(--black);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem 2rem;
+    }
+
+    /* ── BUILT BY OPERATORS ─────────────────────── */
+    .operators-wrapper {
+      background-image: url('brand_assets/Orange Gradient BG.png');
+      background-size: cover;
+      background-position: top right;
+      border-bottom: var(--border);
+    }
+    .operators-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .operators-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .operators-context {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #2a2a2a;
+    }
+    .operators-context p { margin-bottom: 0.75rem; }
+    .operators-context p:last-child { margin-bottom: 0; }
+    .operators-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .op-bullet {
+      background: var(--white);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    .op-bullet-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .op-bullet-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .op-bullet-body { font-size: 0.88rem; line-height: 1.55; color: #333; }
+    .op-bullet-cta {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--teal);
+      margin-top: 0.5rem;
+    }
+
+    /* ── SOCIAL PROOF ───────────────────────────── */
+    .proof-wrapper {
+      background: var(--black);
+      border-bottom: var(--border);
+    }
+    .proof-section { padding: 7.5rem 1.5rem; }
+    .proof-inner { max-width: 1200px; margin: 0 auto; }
+    .proof-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .proof-header .section-eyebrow { color: var(--orange); }
+    .proof-header .section-headline { color: var(--white); max-width: 100%; }
+    .proof-mascot-deco {
+      position: absolute;
+      top: -1rem;
+      right: 0;
+      width: 90px;
+      opacity: 0.13;
+      pointer-events: none;
+    }
+    .proof-aggregate {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+    .proof-aggregate-label { font-size: 0.9rem; color: #aaa; }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .proof-card {
+      background: var(--cream);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: 4px 4px 0 rgba(244,177,63,0.25);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      color: var(--black);
+    }
+    .proof-result {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--teal);
+    }
+    .proof-quote {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      font-weight: 500;
+      color: #333;
+      flex: 1;
+    }
+    .proof-author { display: flex; flex-direction: column; gap: 0.2rem; }
+    .proof-name { font-weight: 700; font-size: 0.875rem; }
+    .proof-role { font-size: 0.78rem; color: #666; }
+    .proof-before {
+      font-size: 0.78rem;
+      color: #888;
+      background: #f0f0eb;
+      border-radius: 4px;
+      padding: 0.4rem 0.75rem;
+    }
+    .proof-placeholder {
+      opacity: 0.48;
+      border-style: dashed;
+    }
+
+    /* ── PARA QUEM ──────────────────────────────── */
+    .icp-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .icp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .icp-card {
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+    }
+    .icp-card-header {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .icp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .icp-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .icp-list .icon { flex-shrink: 0; font-weight: 900; margin-top: 0.1rem; }
+    .icp-card.icp-yes { background: var(--teal); color: var(--white); }
+    .icp-card.icp-yes .icp-list li { color: #cde3d8; }
+    .icp-card.icp-yes .icp-list .icon { color: var(--orange); }
+    .icp-card.icp-no  { background: var(--white); }
+    .icp-card.icp-no  .icp-list li { color: #555; }
+    .icp-card.icp-no  .icp-list .icon { color: #c00; }
+
+    /* ── PRICING ────────────────────────────────── */
+    .pricing-wrapper {
+      border-top: var(--border);
+      border-bottom: var(--border);
+      background: var(--white);
+    }
+    .pricing-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .pricing-header { text-align: center; margin-bottom: 1rem; }
+    .pricing-anchor {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #333;
+      background: var(--lavender);
+      border: var(--border-card);
+      border-radius: var(--radius);
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .pricing-anchor-wrap { text-align: center; }
+    .pricing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: var(--border-card);
+      border-radius: 100px;
+      width: fit-content;
+      margin: 0 auto 2.5rem;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .toggle-btn {
+      padding: 0.5rem 1.25rem;
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: background 0.12s, color 0.12s;
+    }
+    .toggle-btn.active {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 100px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+    .price-card {
+      border: var(--border-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .price-card.featured {
+      background: var(--rust);
+      color: var(--black);
+      border: 3px solid var(--black);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-8px);
+    }
+    .price-card-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--black);
+      color: var(--orange);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      display: inline-block;
+      width: fit-content;
+    }
+    .price-card-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .price-period { font-size: 0.85rem; font-weight: 500; color: #777; }
+    .price-card.featured .price-period { color: rgba(0,0,0,0.55); }
+    .price-sub { font-size: 0.85rem; line-height: 1.55; color: #666; }
+    .price-card.featured .price-sub { color: rgba(0,0,0,0.6); }
+    .price-divider { border: none; border-top: 1px solid #e5e5e0; margin: 0; }
+    .price-card.featured .price-divider { border-top-color: rgba(0,0,0,0.15); }
+    .price-scope {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #aaa;
+    }
+    .price-card.featured .price-scope { color: rgba(0,0,0,0.45); }
+    .price-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .price-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      line-height: 1.45;
+    }
+    .price-features .chk { flex-shrink: 0; font-weight: 900; color: var(--teal); margin-top: 0.05rem; }
+    .price-card.featured .price-features .chk { color: rgba(0,0,0,0.7); }
+    .price-cta-btn {
+      width: 100%;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      min-height: 52px;
+    }
+    .price-card.featured .btn-black {
+      background: var(--black);
+      color: var(--white);
+    }
+    .price-trust { font-size: 0.75rem; text-align: center; color: #888; }
+    .price-card.featured .price-trust { color: rgba(0,0,0,0.45); }
+    .scale-trigger {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal);
+      background: rgba(47,100,81,0.07);
+      border-radius: 4px;
+      padding: 0.4rem 0.75rem;
+      margin-top: -0.5rem;
+    }
+    .pricing-footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .price-vencefy-anchor {
+      font-size: 0.78rem;
+      color: #777;
+      margin-top: -0.25rem;
+      line-height: 1.5;
+    }
+    .price-micro {
+      font-size: 0.78rem;
+      color: #666;
+      text-align: center;
+      margin-top: 0.25rem;
+      line-height: 1.5;
+    }
+    .pricing-trust-bar {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: #888;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .pricing-trust-bar span::before { content: '·'; margin-right: 1.5rem; }
+    .pricing-trust-bar span:first-child::before { display: none; }
+
+    /* ── FAQ ────────────────────────────────────── */
+    .faq-section {
+      padding: 7.5rem 1.5rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      border: var(--border-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .faq-item { border-bottom: var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      width: 100%;
+      background: var(--white);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      gap: 1rem;
+      transition: background 0.1s;
+    }
+    .faq-question:hover { background: #f5f5ef; }
+    .faq-question.open { background: var(--black); color: var(--white); }
+    .faq-icon {
+      flex-shrink: 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      transition: transform 0.2s;
+    }
+    .faq-question.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      padding: 1.25rem 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #333;
+      background: #fafaf5;
+      border-top: var(--border);
+    }
+    .faq-answer.open { display: block; }
+
+    /* ── CTA FINAL ──────────────────────────────── */
+    .cta-final-wrapper {
+      background: var(--rust);
+      color: var(--black);
+      border-top: var(--border);
+      border-bottom: var(--border);
+    }
+    .cta-final {
+      padding: 8rem 1.5rem;
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta-final-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      color: var(--black);
+    }
+    .cta-final-sub {
+      font-size: 1.05rem;
+      color: rgba(0,0,0,0.68);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+    .cta-final-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: left;
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-final-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--black);
+    }
+    .cta-final-list .chk { color: var(--black); font-weight: 900; flex-shrink: 0; }
+    .cta-final-trust { font-size: 0.82rem; color: rgba(0,0,0,0.5); margin-top: 0.75rem; }
+    .cta-final-micro {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0,0,0,0.15);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(0,0,0,0.6);
+    }
+    .cta-final-micro strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--black);
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 3.5rem 1.5rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+    }
+    .footer-logo img { height: 34px; filter: invert(1); }
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .footer-col a { display: block; font-size: 0.875rem; margin-bottom: 0.5rem; color: #ccc; }
+    .footer-col a:hover { color: var(--white); text-decoration: underline; }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 2.5rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid #1f1f1f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #555;
+    }
+    .footer-bottom a { color: #888; }
+    .footer-bottom a:hover { text-decoration: underline; }
+
+    /* ── MOBILE STICKY CTA ───────────────────────── */
+    .mobile-sticky-cta {
+      display: none;
+    }
+    @media (max-width: 640px) {
+      .mobile-sticky-cta {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: var(--white);
+        border-top: var(--border-card);
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+        align-items: center;
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+      }
+      .mobile-sticky-cta .btn {
+        flex: 1;
+        justify-content: center;
+        font-size: 0.95rem;
+        padding: 0.7rem 1rem;
+      }
+    }
+
+    /* ── SCROLL TO TOP ───────────────────────────── */
+    #scroll-top-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--orange);
+      color: var(--black);
+      border: var(--border-card);
+      border-radius: 50%;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity 0.25s cubic-bezier(0.16,1,0.3,1), transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s;
+    }
+    #scroll-top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #scroll-top-btn:hover {
+      transform: translateY(-3px);
+      background: #e8a030;
+      box-shadow: var(--shadow-lg);
+    }
+    #scroll-top-btn:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+    @keyframes rollUp {
+      0%   { transform: rotate(0deg) scale(1); }
+      40%  { transform: rotate(180deg) scale(1.15); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    #scroll-top-btn.rolling { animation: rollUp 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+    /* ── PROOF AVATAR ────────────────────────────── */
+    .proof-author-inner { display: flex; align-items: center; gap: 0.75rem; }
+    .proof-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--black);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .proof-author-text { display: flex; flex-direction: column; gap: 0.1rem; }
+
+    /* ── DECORATIVE ──────────────────────────────── */
+    .star-deco { display: inline-block; color: var(--orange); font-size: 1.1em; }
+    .brand-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-icon-sm { width: 20px; height: 20px; }
+    .brand-icon-md { width: 28px; height: 28px; }
+    .brand-icon-lg { width: 40px; height: 40px; }
+
+    /* ── HERO CHAT MOCK ─────────────────────────────── */
+    .hero-chat {
+      width: 100%;
+      max-width: 500px;
+      background: var(--white);
+      border: var(--border-card);
+      border-radius: 12px;
+      box-shadow: 8px 8px 0 var(--black);
+      overflow: hidden;
+      font-family: var(--font);
+    }
+    .hc-topbar {
+      background: #1a1a1a;
+      padding: 0.55rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .hc-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .hc-url { margin-left: 0.65rem; font-size: 0.65rem; color: #666; font-family: monospace; }
+
+    /* 3-panel layout: nav | list | chat */
+    .hc-body { display: grid; grid-template-columns: 80px 122px 1fr; min-height: 340px; }
+
+    /* ① Nav sidebar */
+    .hc-nav {
+      background: #f7f7f3;
+      border-right: 1px solid #e5e5e0;
+      padding: 0.6rem 0.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.04rem;
+      overflow: hidden;
+    }
+    .hc-nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.15rem 0.2rem 0.5rem;
+      border-bottom: 1px solid #e5e5e0;
+      margin-bottom: 0.35rem;
+    }
+    .hc-nav-logo img { width: 24px; height: 24px; object-fit: contain; }
+    .hc-nav-wizard {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(244,177,63,0.18);
+      border-radius: 5px;
+      padding: 0.3rem 0.42rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #b87800;
+      margin-bottom: 0.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .hc-nav-section {
+      font-size: 0.43rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #c0c0c0;
+      padding: 0.38rem 0.42rem 0.15rem;
+    }
+    .hc-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.26rem 0.42rem;
+      border-radius: 5px;
+      font-size: 0.55rem;
+      font-weight: 500;
+      color: #777;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+    .hc-nav-item-active {
+      background: rgba(228,193,249,0.42);
+      color: #6b21a8;
+      font-weight: 700;
+    }
+    .hc-nav-credits {
+      margin-top: auto;
+      padding: 0.4rem 0.42rem;
+      font-size: 0.51rem;
+      font-weight: 700;
+      color: var(--rust);
+      border-top: 1px solid #e5e5e0;
+    }
+
+    /* ② Conversation list */
+    .hc-list {
+      border-right: 1px solid #e5e5e0;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+    }
+    .hc-search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding: 0.42rem 0.48rem;
+      border-bottom: 1px solid #f0f0eb;
+    }
+    .hc-search-input {
+      flex: 1;
+      background: #f5f5ef;
+      border: 1px solid #e8e8e3;
+      border-radius: 5px;
+      padding: 0.2rem 0.42rem;
+      font-size: 0.55rem;
+      color: #bbb;
+      display: flex;
+      align-items: center;
+    }
+    .hc-refresh-icon { color: #bbb; font-size: 0.62rem; cursor: pointer; flex-shrink: 0; }
+    .hc-tabs {
+      display: flex;
+      border-bottom: 1px solid #e5e5e0;
+      padding: 0 0.25rem;
+    }
+    .hc-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.18rem;
+      padding: 0.32rem 0.28rem;
+      font-size: 0.53rem;
+      font-weight: 600;
+      color: #bbb;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .hc-tab-active { color: var(--black); border-bottom-color: var(--teal); }
+    .hc-tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal);
+      color: var(--white);
+      border-radius: 100px;
+      min-width: 13px;
+      height: 13px;
+      font-size: 0.47rem;
+      font-weight: 800;
+      padding: 0 2px;
+    }
+    .hc-list-contact {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.36rem;
+      padding: 0.46rem 0.48rem;
+      border-bottom: 1px solid #f5f5ef;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+    .hc-list-contact-active {
+      background: #fafaf5;
+      border-left-color: var(--rust);
+    }
+    .hc-list-info { flex: 1; min-width: 0; }
+    .hc-list-name { font-size: 0.6rem; font-weight: 700; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hc-list-preview { font-size: 0.54rem; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.1rem; }
+    .hc-list-campaign { font-size: 0.5rem; color: #ccc; margin-top: 0.08rem; }
+    .hc-list-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.13rem; flex-shrink: 0; }
+    .hc-list-time { font-size: 0.49rem; color: #bbb; }
+    .hc-list-unread {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 14px;
+      height: 14px;
+      background: #e8e8e3;
+      color: #888;
+      border-radius: 100px;
+      font-size: 0.47rem;
+      font-weight: 800;
+      padding: 0 3px;
+    }
+
+    /* ③ Chat conversation area */
+    .hc-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.58rem; font-weight: 800; flex-shrink: 0; letter-spacing: 0.01em;
+    }
+    .hc-avatar-sm { width: 22px; height: 22px; font-size: 0.52rem; }
+    .hc-avatar-teal { background: var(--teal); color: var(--white); }
+    .hc-avatar-gray { background: #e5e5e0; color: #888; }
+    .hc-conv { display: flex; flex-direction: column; }
+    .hc-conv-header {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 0.48rem;
+    }
+    .hc-conv-name { font-size: 0.7rem; font-weight: 700; color: var(--black); }
+    .hc-conv-meta { font-size: 0.55rem; color: #999; }
+    .hc-ai-badge {
+      margin-left: auto;
+      font-size: 0.52rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--teal); background: rgba(47,100,81,0.1);
+      padding: 0.16rem 0.44rem; border-radius: 100px; white-space: nowrap;
+    }
+    .hc-messages {
+      flex: 1;
+      padding: 0.75rem 0.7rem;
+      display: flex; flex-direction: column; gap: 0.46rem;
+      overflow: hidden;
+    }
+    .hc-msg {
+      max-width: 87%;
+      padding: 0.46rem 0.68rem;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      line-height: 1.46;
+    }
+    .hc-msg-out { background: var(--teal); color: var(--white); align-self: flex-end; border-bottom-right-radius: 3px; }
+    .hc-msg-in  { background: #f0f0eb; color: #333; align-self: flex-start; border-bottom-left-radius: 3px; }
+    .hc-msg-time { font-size: 0.51rem; opacity: 0.55; margin-top: 0.22rem; text-align: right; }
+    .hc-msg-in .hc-msg-time { text-align: left; }
+    .hc-typing {
+      display: flex; align-items: center; gap: 0.25rem;
+      padding: 0.44rem 0.65rem;
+      background: #f0f0eb; border-radius: 10px; border-bottom-left-radius: 3px;
+      align-self: flex-start; width: 44px;
+    }
+    .hc-typing span {
+      width: 5px; height: 5px; border-radius: 50%; background: #bbb;
+      animation: typingBounce 1.3s ease-in-out infinite;
+    }
+    .hc-typing span:nth-child(2) { animation-delay: 0.18s; }
+    .hc-typing span:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes typingBounce {
+      0%, 55%, 100% { transform: translateY(0); }
+      28% { transform: translateY(-4px); }
+    }
+    .hc-copilot {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.52rem 0.75rem;
+      background: #fffcf0; border-top: 1px solid #f0e8c0;
+      font-size: 0.64rem;
+    }
+    .hc-copilot-icon { color: var(--teal); flex-shrink: 0; }
+    .hc-copilot-label { font-weight: 700; color: var(--teal); white-space: nowrap; }
+    .hc-copilot-text { color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Hero chat entrance animations — JS-driven transitions */
+    .hc-reveal {
+      opacity: 0;
+      transform: translateY(7px);
+      transition: opacity 0.42s cubic-bezier(0.16,1,0.3,1), transform 0.42s cubic-bezier(0.16,1,0.3,1);
+    }
+    .hc-reveal.hc-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .diff-grid { grid-template-columns: 1fr 1fr; }
+      .diff-grid .diff-card:last-child { grid-column: 1 / -1; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+      .price-card.featured { transform: none; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .sandbox-body { grid-template-columns: 1fr; }
+      .operators-top { grid-template-columns: 1fr; }
+      .proof-grid { grid-template-columns: 1fr; }
+      .icp-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-links { grid-template-columns: repeat(2, 1fr); }
+      .diff-grid { grid-template-columns: 1fr; }
+      .how-step { grid-template-columns: 80px 1fr; }
+      .how-step-num { font-size: 2.5rem; }
+      .proof-mascot-deco { display: none; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-login { display: none; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .problem-scene { padding: 1.75rem; }
+      .hero { padding: 3rem 1.5rem 3.5rem; }
+      .hero-headline { font-size: clamp(2.25rem, 9vw, 3rem); }
+      .icp-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .hero-cta .btn { font-size: 0.95rem; padding: 0.7rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="brand_assets/Back Chattie - Full Mark.png" alt="Chattie">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Como funciona</a></li>
+      <li><a href="#pricing">Preços</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="nav-login">Login</a>
+      <a href="#" class="btn btn-orange">Começar agora</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────── -->
+<div class="hero-wrapper">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="star-deco">✦</span> Para founders B2B que vendem pelo LinkedIn
+    </div>
+    <h1 class="hero-headline">
+      Automação envia mensagens.<br>
+      O Chattie <em>conversa.</em>
+    </h1>
+    <p class="hero-sub">
+      Você perde prospects qualificados porque demora para responder. O Chattie cuida dos follow-ups, conduz conversas e agenda reuniões — automaticamente. Pipeline previsível em 30 dias, sem contratar mais ninguém.
+    </p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-brand" style="font-size:1rem; padding: 0.8rem 2rem;">Começar agora →</a>
+      <a href="#como-funciona" class="btn btn-outline" style="font-size:1rem; padding: 0.8rem 1.75rem; border-width: 2px;">↓ Ver como funciona</a>
+    </div>
+    <p class="hero-trust">Sem cartão · Cancele quando quiser · Suporte em português</p>
+    <div class="hero-social-proof">
+      <span class="hero-social-proof-dot"></span>
+      <span><strong>+47 founders B2B</strong> já prospectam com o Chattie.</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-chat" role="img" aria-label="Conversa real no Chattie — AI SDR em ação">
+      <!-- Browser chrome -->
+      <div class="hc-topbar">
+        <span class="hc-dot" style="background:#ff5f57"></span>
+        <span class="hc-dot" style="background:#febc2e"></span>
+        <span class="hc-dot" style="background:#28c840"></span>
+        <span class="hc-url">app.chattie.com.br — Inbox</span>
+      </div>
+      <!-- 3-panel body: nav | list | chat -->
+      <div class="hc-body">
+
+        <!-- ① Nav sidebar -->
+        <div class="hc-nav">
+          <div class="hc-nav-logo">
+            <img src="brand_assets/Black Chattie - Face Symbol.png" alt="Chattie">
+          </div>
+          <div class="hc-nav-wizard">✦ Setup Wizard</div>
+          <div class="hc-nav-section">OUTREACH</div>
+          <div class="hc-nav-item">📢 Campaigns</div>
+          <div class="hc-nav-item hc-nav-item-active">📥 Inbox</div>
+          <div class="hc-nav-item">👤 Leads</div>
+          <div class="hc-nav-section">CONFIGURAÇÃO</div>
+          <div class="hc-nav-item">🎁 Offerings</div>
+          <div class="hc-nav-item">💬 Prompts</div>
+          <div class="hc-nav-item">💼 LinkedIn</div>
+          <div class="hc-nav-section">CONTA</div>
+          <div class="hc-nav-item">👤 Perfil</div>
+          <div class="hc-nav-item">🧪 Sandbox</div>
+          <div class="hc-nav-credits">⊙ créditos</div>
+        </div>
+
+        <!-- ② Conversation list -->
+        <div class="hc-list">
+          <div class="hc-search-row">
+            <div class="hc-search-input">🔍 Buscar conversas...</div>
+            <span class="hc-refresh-icon">↻</span>
+          </div>
+          <div class="hc-tabs">
+            <button class="hc-tab hc-tab-active">Todas <span class="hc-tab-badge">2</span></button>
+            <button class="hc-tab">Ativas <span class="hc-tab-badge" style="background:#bbb;">1</span></button>
+          </div>
+          <!-- Contact 1 — active/selected -->
+          <div class="hc-list-contact hc-list-contact-active">
+            <div class="hc-avatar hc-avatar-teal">BH</div>
+            <div class="hc-list-info">
+              <div class="hc-list-name">Brenno Hoffmann</div>
+              <div class="hc-list-preview">não percebi, pq você...</div>
+              <div class="hc-list-campaign">TRA - Outreach</div>
+            </div>
+            <div class="hc-list-meta">
+              <span class="hc-list-time">1d</span>
+              <span class="hc-list-unread">0</span>
+            </div>
+          </div>
+          <!-- Contact 2 -->
+          <div class="hc-list-contact">
+            <div class="hc-avatar hc-avatar-gray">TL</div>
+            <div class="hc-list-info">
+              <div class="hc-list-name" style="color:#999">Thiago Lisboa</div>
+              <div class="hc-list-preview" style="color:#ccc">Oi Thiago! Vi que você...</div>
+              <div class="hc-list-campaign">TRA - Outreach</div>
+            </div>
+            <div class="hc-list-meta">
+              <span class="hc-list-time">1d</span>
+              <span class="hc-list-unread">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ③ Chat conversation -->
+        <div class="hc-conv">
+          <div class="hc-conv-header">
+            <div class="hc-avatar hc-avatar-teal hc-avatar-sm">BH</div>
+            <div>
+              <div class="hc-conv-name">Brenno Hoffmann</div>
+              <div class="hc-conv-meta">TRA - Outreach</div>
+            </div>
+            <div class="hc-ai-badge">✦ AI SDR</div>
+          </div>
+          <div class="hc-messages">
+            <div class="hc-msg hc-msg-out hc-reveal" id="hcm1">
+              O gargalo é sempre o mesmo: o fundador vira refém do processo comercial.
+              <div class="hc-msg-time">IA · 21:43</div>
+            </div>
+            <div class="hc-msg hc-msg-in hc-reveal" id="hcm2">
+              você é um robo né? me parece muito um bot
+              <div class="hc-msg-time">21:47</div>
+            </div>
+            <div class="hc-msg hc-msg-out hc-reveal" id="hcm3">
+              Não, sou eu mesmo! Trabalho com tech B2B para automatizar sem depender só do fundador.
+              <div class="hc-msg-time">IA · 21:49</div>
+            </div>
+            <div class="hc-typing hc-reveal" id="hcm4">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="hc-copilot">
+            <svg class="hc-copilot-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2.17" y1="2.17" x2="9.83" y2="9.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="9.83" y1="2.17" x2="2.17" y2="9.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="hc-copilot-label">Copilot sugere:</span>
+            <span class="hc-copilot-text">Confirmar call — quinta 15h →</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── PROBLEM ──────────────────────────────────── -->
+<div class="problem-wrapper">
+<section class="problem-section">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">O problema</p>
+    <h2 class="section-headline">"Você sabe exatamente como essa história termina."</h2>
+  </div>
+
+  <div class="problem-scene reveal">
+    <div class="scene-time">Quinta-feira, 16h</div>
+    <p>Um prospect respondeu sua mensagem no LinkedIn.</p>
+    <p>Você pensou "vou responder depois" — e não respondeu.</p>
+    <p>Na segunda-feira, ele fechou com outro.</p>
+    <div class="scene-verdict">
+      Isso não aconteceu porque você é desorganizado.<br>
+      Aconteceu porque vender B2B pelo LinkedIn sem sistema é sempre assim.
+    </div>
+  </div>
+
+  <p class="reveal" style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--white);">
+    Os 4 sinais de que você precisa de sistema:
+  </p>
+
+  <div class="problem-grid">
+    <div class="pain-card reveal reveal-d1" style="background: var(--lavender);">
+      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="16" y1="3" x2="16" y2="29" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="16" x2="29" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="6.51" y1="6.51" x2="25.49" y2="25.49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="25.49" y1="6.51" x2="6.51" y2="25.49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+      <div class="pain-card-title">A conversa ia bem — e você sumiu.</div>
+      <p class="pain-card-body">O prospect estava pronto. O follow-up atrasou 3 dias. Ele fechou com quem respondeu primeiro. Não por falta de interesse. Por falta de presença.</p>
+    </div>
+    <div class="pain-card reveal reveal-d2" style="background: var(--cyan);">
+      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="7.51" y1="7.51" x2="24.49" y2="24.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/><line x1="24.49" y1="7.51" x2="7.51" y2="24.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/></svg></div>
+      <div class="pain-card-title">40 DMs abertas. Nenhuma organizada.</div>
+      <p class="pain-card-body">Quais estão quentes? Quais já esfriaram? Quais morreram em silêncio? Você não sabe. Então não segue nenhuma direito.</p>
+    </div>
+    <div class="pain-card reveal reveal-d3" style="background: var(--white);">
+      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="3" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="2.5"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="2.5"/></svg></div>
+      <div class="pain-card-title">Você já ouviu "isso é automação, né?"</div>
+      <p class="pain-card-body">Mensagem genérica enviada. Silêncio total — ou pior: o prospect percebe e sua credibilidade vai junto.</p>
+    </div>
+    <div class="pain-card reveal reveal-d4" style="background: var(--orange);">
+      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 5 L27 11 L27 21 L16 27 L5 21 L5 11 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="16" y1="5" x2="16" y2="27" stroke="currentColor" stroke-width="2"/><line x1="5" y1="11" x2="27" y2="21" stroke="currentColor" stroke-width="2"/><line x1="27" y1="11" x2="5" y2="21" stroke="currentColor" stroke-width="2"/></svg></div>
+      <div class="pain-card-title">Quando você para, o pipeline para.</div>
+      <p class="pain-card-body">Sua aquisição depende da sua agenda. É um ciclo que não escala — e você já sabe disso.</p>
+    </div>
+  </div>
+
+  <p class="reveal" style="font-size: 1rem; font-weight: 700; color: var(--orange); margin-bottom: 1rem; letter-spacing: 0.01em;">
+    No LinkedIn, quem responde primeiro fecha. Quem atrasa, perde.
+  </p>
+  <div class="problem-remate reveal">
+    A razão disso continuar acontecendo não é falta de esforço.<br>
+    É falta de sistema.
+  </div>
+</section>
+</div>
+
+<!-- ── HOW IT WORKS ──────────────────────────────── -->
+<section class="how-section" id="como-funciona">
+  <div class="how-inner">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Como funciona</p>
+      <h2 class="section-headline">Configure hoje. Pipeline amanhã.</h2>
+      <p class="section-sub">Três passos. Sem treinamento. Sem semanas de setup.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step reveal">
+        <div class="how-step-num">01</div>
+        <div class="how-step-content">
+          <h3 class="how-step-title">Setup Wizard com IA — 10 minutos.</h3>
+          <p class="how-step-body">Cole o link do seu site. Em segundos, o Setup Wizard analisa sua oferta e cria automaticamente o contexto de venda e o perfil do AI SDR. Adicione seus leads via CSV. Pronto.</p>
+          <div class="how-step-outcome">Em 10 minutos, sua IA já sabe quem você é, o que você vende e como falar com seu ICP.</div>
+        </div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">02</div>
+        <div class="how-step-content">
+          <h3 class="how-step-title">Sandbox — teste antes de disparar.</h3>
+          <p class="how-step-body">Antes de qualquer mensagem sair, simule a conversa completa no <strong>Sandbox</strong> com leads reais. Veja palavra por palavra o que a IA vai dizer. Ajuste o tom, a oferta, o prompt. Só quando aprovar, a campanha começa.</p>
+          <div class="how-step-outcome">Teste cada mensagem antes de ela sair. Zero risco de parecer bot.</div>
+        </div>
+      </div>
+      <div class="how-step reveal">
+        <div class="how-step-num">03</div>
+        <div class="how-step-content">
+          <h3 class="how-step-title">AI SDR Autopilot — conversas rodando.</h3>
+          <p class="how-step-body">Autopilot ou Copilot — você escolhe o nível de controle. A IA inicia, acompanha e faz follow-up. Nenhuma oportunidade esquecida. Na Inbox unificada, você vê quem está quente e quando entrar.</p>
+          <div class="how-step-outcome">Respostas qualificadas chegam em 3–7 dias. Sem você fazer nada.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Product screenshot gallery -->
+    <div class="how-screenshots reveal" style="margin-top: 2.5rem;">
+      <p style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#777;margin-bottom:1rem;">O produto em uso</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+
+        <!-- Campaigns Manager -->
+        <div style="border:var(--border-card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+          <div style="background:#1a1a1a;padding:0.5rem 0.75rem;display:flex;align-items:center;gap:0.35rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+            <span style="font-size:0.62rem;color:#666;font-family:monospace;margin-left:0.3rem;">Campaigns Manager</span>
+          </div>
+          <div style="overflow:hidden;height:200px;position:relative;background:#f9f9f6;">
+            <img src="brand_assets/chattie-v2-campaigns.jpeg" alt="Campaigns Manager" style="width:100%;height:auto;display:block;position:absolute;top:0;left:0;">
+          </div>
+          <div style="padding:0.65rem 0.85rem;background:var(--white);border-top:1px solid #eee;font-size:0.72rem;font-weight:600;color:#555;">📊 Métricas · Configuração · Checklist</div>
+        </div>
+
+        <!-- Inbox unificada -->
+        <div style="border:var(--border-card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+          <div style="background:#1a1a1a;padding:0.5rem 0.75rem;display:flex;align-items:center;gap:0.35rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+            <span style="font-size:0.62rem;color:#666;font-family:monospace;margin-left:0.3rem;">Inbox — AI SDR</span>
+          </div>
+          <div style="overflow:hidden;height:200px;position:relative;background:#f9f9f6;">
+            <img src="brand_assets/chattie-v2-inbox.jpeg" alt="Inbox unificada" style="width:100%;height:auto;display:block;position:absolute;top:0;left:0;">
+          </div>
+          <div style="padding:0.65rem 0.85rem;background:var(--white);border-top:1px solid #eee;font-size:0.72rem;font-weight:600;color:#555;">📥 Conversas · Copilot · AI SDR</div>
+        </div>
+
+        <!-- Sandbox -->
+        <div style="border:var(--border-card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+          <div style="background:#1a1a1a;padding:0.5rem 0.75rem;display:flex;align-items:center;gap:0.35rem;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+            <span style="font-size:0.62rem;color:#666;font-family:monospace;margin-left:0.3rem;">Sandbox — Simulador</span>
+          </div>
+          <div style="overflow:hidden;height:200px;position:relative;background:#f9f9f6;">
+            <img src="brand_assets/chattie-v2-sandbox.jpeg" alt="Sandbox de mensagens" style="width:100%;height:auto;display:block;position:absolute;top:0;left:0;">
+          </div>
+          <div style="padding:0.65rem 0.85rem;background:var(--white);border-top:1px solid #eee;font-size:0.72rem;font-weight:600;color:#555;">🧪 Teste antes de disparar</div>
+        </div>
+
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 2.5rem;">
+      <a href="#" class="btn btn-brand" style="font-size:1rem; padding:0.8rem 2rem;">Começar agora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SANDBOX ────────────────────────────────────── -->
+<div class="sandbox-wrapper" id="sandbox">
+<section class="sandbox-section">
+  <div class="sandbox-unique-badge">✦ Único no Brasil</div>
+  <p class="section-eyebrow">O diferencial incontestável</p>
+  <h2 class="section-headline">
+    O único Sandbox de mensagens para LinkedIn do Brasil.
+  </h2>
+  <p class="section-sub">Nasceu porque precisávamos testar mensagens antes de disparar para 500 prospects. Nenhuma ferramenta permitia isso. Então construímos.</p>
+  <p class="reveal" style="font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.6); margin-top: 0.75rem; font-style: italic;">Verificamos todos os players do mercado BR. Nenhum outro permite simular a conversa completa antes de disparar.</p>
+
+  <!-- Sandbox screenshot -->
+  <div class="reveal" style="margin: 2.5rem 0; border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(0,0,0,0.35);">
+    <div style="background: rgba(0,0,0,0.4); padding: 0.65rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+      <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+      <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+      <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+      <span style="margin-left:0.5rem;font-size:0.72rem;color:rgba(255,255,255,0.4);font-family:monospace;">app.chattie.com.br/sandbox</span>
+    </div>
+    <div style="overflow:hidden; height: 400px; position:relative;">
+      <img src="brand_assets/chattie-v2-sandbox.jpeg" alt="Sandbox do Chattie em uso" style="width:100%; height:auto; display:block; position:absolute; top:0; left:0;">
+    </div>
+  </div>
+
+  <div class="sandbox-body">
+    <div class="sandbox-story reveal">
+      <p>A TRA roda campanhas de Social Selling para dezenas de clientes B2B. Cada cliente tem produto diferente, ICP diferente, tom diferente.</p>
+      <p>O problema: antes de disparar qualquer campanha, precisávamos testar as mensagens — e <em>nenhuma ferramenta permitia isso</em>. Você configurava, disparava, e só descobria se funcionou quando o prospect respondia (ou não respondia).</p>
+      <p>Então construímos o Sandbox. <em>Para nós mesmos, primeiro.</em></p>
+      <p>Quando vimos que era o único do mercado no Brasil, adicionamos ao Chattie.</p>
+    </div>
+    <div class="sandbox-right">
+      <div class="sandbox-how reveal reveal-d1">
+        <div class="sandbox-how-title">Como funciona na prática</div>
+        <p>Escolha uma oferta → selecione um lead real → simule a conversa completa. Veja o que a IA diz, como ela responde a objeções, quando propõe o próximo passo. Não ficou bom? Ajuste o prompt e teste de novo. Sem consequência. Ficou perfeito? Ativa a campanha.</p>
+      </div>
+      <div class="sandbox-eliminates reveal reveal-d2">
+        <div class="sandbox-eliminates-title">Sem Sandbox vs. Com Sandbox:</div>
+        <div style="background: rgba(229,123,51,0.15); border: 1px solid rgba(229,123,51,0.3); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; color: rgba(255,255,255,0.85);">
+          <strong style="color: var(--orange);">Sem Sandbox:</strong> você descobre que a mensagem soou errada depois que o lead sumiu.<br>
+          <strong style="color: var(--sage);">Com Sandbox:</strong> você ajusta antes de disparar. Sem consequência. Sem perder o lead.
+        </div>
+        <ul class="sandbox-elim-list">
+          <li><span class="elim-icon">🎯</span> O risco de queimar reputação com mensagem errada</li>
+          <li><span class="elim-icon">⚙️</span> O cheiro de automação que afasta prospects qualificados</li>
+          <li><span class="elim-icon">✅</span> A ansiedade de não saber o que a IA está dizendo em seu nome</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top: 2.5rem;">
+    <a href="#pricing" class="btn btn-orange" style="font-size:1rem; padding:0.8rem 2.25rem; border-color: var(--black);">Assine agora!</a>
+  </div>
+</section>
+</div>
+
+<!-- ── TICKER ────────────────────────────────────── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-icon">🤖</span> AI SDR conversacional</span>
+    <span class="ticker-item"><span class="ticker-icon">🧪</span> Sandbox de mensagens</span>
+    <span class="ticker-item"><span class="ticker-icon">✈️</span> Autopilot</span>
+    <span class="ticker-item"><span class="ticker-icon">🎮</span> Copilot</span>
+    <span class="ticker-item"><span class="ticker-icon">📥</span> Inbox unificada</span>
+    <span class="ticker-item"><span class="ticker-icon">🔄</span> Follow-up inteligente</span>
+    <span class="ticker-item"><span class="ticker-icon">📊</span> Campaigns Manager</span>
+    <span class="ticker-item"><span class="ticker-icon">👥</span> Leads Manager</span>
+    <span class="ticker-item"><span class="ticker-icon">⚡</span> Setup Wizard IA</span>
+    <span class="ticker-item"><span class="ticker-icon">🎯</span> Prompts customizáveis</span>
+    <span class="ticker-item"><span class="ticker-icon">🇧🇷</span> Suporte em português</span>
+    <span class="ticker-item"><span class="ticker-icon">📌</span> LinkedIn nativo</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="ticker-item"><span class="ticker-icon">🤖</span> AI SDR conversacional</span>
+    <span class="ticker-item"><span class="ticker-icon">🧪</span> Sandbox de mensagens</span>
+    <span class="ticker-item"><span class="ticker-icon">✈️</span> Autopilot</span>
+    <span class="ticker-item"><span class="ticker-icon">🎮</span> Copilot</span>
+    <span class="ticker-item"><span class="ticker-icon">📥</span> Inbox unificada</span>
+    <span class="ticker-item"><span class="ticker-icon">🔄</span> Follow-up inteligente</span>
+    <span class="ticker-item"><span class="ticker-icon">📊</span> Campaigns Manager</span>
+    <span class="ticker-item"><span class="ticker-icon">👥</span> Leads Manager</span>
+    <span class="ticker-item"><span class="ticker-icon">⚡</span> Setup Wizard IA</span>
+    <span class="ticker-item"><span class="ticker-icon">🎯</span> Prompts customizáveis</span>
+    <span class="ticker-item"><span class="ticker-icon">🇧🇷</span> Suporte em português</span>
+    <span class="ticker-item"><span class="ticker-icon">📌</span> LinkedIn nativo</span>
+  </div>
+</div>
+
+<!-- ── DIFERENCIAÇÃO ─────────────────────────────── -->
+<div class="diff-wrapper">
+<section class="diff-section">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Comparação</p>
+    <h2 class="section-headline">Três jeitos de prospectar no LinkedIn.<br>Um que realmente escala.</h2>
+    <p class="section-sub">O mercado oferece duas alternativas ruins. O Chattie é a terceira via.</p>
+  </div>
+
+  <div class="diff-grid">
+    <!-- Manual -->
+    <div class="diff-card reveal reveal-d1">
+      <div class="diff-card-label" style="color: #c00;">❌ Fazer na mão — o status quo real</div>
+      <div class="diff-card-title">Você no DM.<br>Sem sistema.</div>
+      <p class="diff-card-desc">Você escreve cada mensagem. Você faz cada follow-up. Funciona — até sua agenda encher. Então o pipeline para junto com você.</p>
+      <ul class="diff-card-features">
+        <li><span class="icon-bad">✗</span> Pipeline para quando você para</li>
+        <li><span class="icon-bad">✗</span> Zero previsibilidade — tudo depende da sua disciplina</li>
+      </ul>
+    </div>
+
+    <!-- Contratar SDR -->
+    <div class="diff-card reveal reveal-d2">
+      <div class="diff-card-label" style="color: #c00;">❌ Contratar SDR — o plano B clássico</div>
+      <div class="diff-card-title">Caro.<br>Não escala.</div>
+      <p class="diff-card-desc">Um SDR júnior custa R$ 3.500+/mês em CLT. Não escala, depende de treinamento, sai nas férias — e a qualidade da conversa varia todo dia.</p>
+      <ul class="diff-card-features">
+        <li><span class="icon-bad">✗</span> R$ 3.500+/mês por pessoa — sem garantia de resultado</li>
+        <li><span class="icon-bad">✗</span> Produtividade cai quando o SDR muda de abordagem ou sai</li>
+      </ul>
+      <div class="diff-card-price" style="color:#c00;">R$ 3.500+/mês por SDR</div>
+    </div>
+
+    <!-- Chattie -->
+    <div class="diff-card diff-hero reveal reveal-d3">
+      <div class="diff-card-label">✓ Chattie — AI Conversation OS</div>
+      <div class="diff-card-title" style="color: white;">IA que conversa.<br>Você fecha.</div>
+      <p class="diff-card-desc">IA que conversa como você conversaria. Sandbox para testar antes de disparar. Controle total sobre tom e abordagem. Construído pela TRA, validado na operação real.</p>
+      <ul class="diff-card-features">
+        <li><span class="icon-good">✓</span> AI SDR com Autopilot + Copilot</li>
+        <li><span class="icon-good">✓</span> Sandbox de mensagens (único no Brasil)</li>
+        <li><span class="icon-good">✓</span> Prompts customizáveis — cada palavra calibrável</li>
+        <li><span class="icon-good">✓</span> Construído pela TRA, validado na operação real</li>
+        <li><span class="icon-good">✓</span> Suporte nativo em português</li>
+      </ul>
+      <div class="diff-card-price" style="color: var(--orange);">R$ 397/mês — menos que a metade</div>
+      <a href="#" class="btn btn-orange price-cta-btn" style="border-color: var(--black);">Começar agora →</a>
+    </div>
+  </div>
+
+  <div class="diff-remate reveal">
+    "Automação envia mensagens. O Chattie conversa."
+  </div>
+</section>
+</div>
+
+<!-- ── BUILT BY OPERATORS ─────────────────────────── -->
+<div class="operators-wrapper">
+<section class="operators-section">
+  <div class="operators-top">
+    <div class="operators-context reveal">
+      <p class="section-eyebrow" style="margin-bottom:0.75rem;">Quem está por trás</p>
+      <h2 class="section-headline" style="margin-bottom:0.75rem;">Nasceu na operação.<br>Não no PowerPoint.</h2>
+      <p class="section-sub" style="margin-bottom:1.75rem;">O Chattie foi construído dentro da TRA — e isso muda tudo.</p>
+      <p>O founder por trás do Chattie opera Social Selling B2B no LinkedIn todos os dias — dentro da TRA (The Revenue Architects), agência que roda campanhas reais para dezenas de clientes.</p>
+      <p><strong>A tensão:</strong> "Toda ferramenta que testamos disparava mensagens. Nenhuma sabia continuar uma conversa. Configurávamos, disparávamos — e só descobríamos se funcionou quando o prospect respondia. Ou não respondia."</p>
+      <p><strong>A resolução:</strong> Então construímos o Chattie para resolver o problema que tínhamos. E descobrimos que todo founder B2B tinha o mesmo.</p>
+      <p>Cada feature foi <strong>sentida antes de ser especificada</strong>. Cada prompt foi testado em prospect real antes de virar código.</p>
+    </div>
+    <div class="operators-bullets">
+      <div class="op-bullet reveal reveal-d1">
+        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="2" x2="14" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="14" x2="26" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="5.44" y1="5.44" x2="22.56" y2="22.56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="22.56" y1="5.44" x2="5.44" y2="22.56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="op-bullet-title">O Sandbox nasceu de um problema real</div>
+        <p class="op-bullet-body">A TRA precisava testar mensagens antes de disparar para 500 prospects de clientes. Nenhuma ferramenta permitia isso. Então construímos — e descobrimos que era o único do mercado brasileiro.</p>
+        <div class="op-bullet-cta">→ Sentida antes de especificada. Essa é a diferença.</div>
+      </div>
+      <div class="op-bullet reveal reveal-d2">
+        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="2.5"/><line x1="14" y1="3" x2="14" y2="25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="14" x2="25" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="op-bullet-title">Feedback loop diário com a operação</div>
+        <p class="op-bullet-body">50+ campanhas rodadas. Mais de 10.000 mensagens testadas no Sandbox antes de virar feature. Qualquer mudança no algoritmo do LinkedIn chega primeiro para a TRA — o Chattie se atualiza em dias, não em trimestres.</p>
+      </div>
+      <div class="op-bullet reveal reveal-d3">
+        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="2.5"/><line x1="14" y1="3" x2="14" y2="25" stroke="currentColor" stroke-width="2.5"/><line x1="3" y1="14" x2="25" y2="14" stroke="currentColor" stroke-width="2.5"/></svg></div>
+        <div class="op-bullet-title">Agência + SaaS: nenhum concorrente tem os dois</div>
+        <p class="op-bullet-body">Quem só faz software nunca operou uma campanha. Quem só faz agência não escala. A TRA tem os dois — e o Chattie é o produto que prova isso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── SOCIAL PROOF ──────────────────────────────── -->
+<div class="proof-wrapper">
+<section class="proof-section">
+  <div class="proof-inner">
+    <div class="proof-header section-header reveal">
+      <img src="brand_assets/Purple Chattie - Face Symbol.png" alt="" class="proof-mascot-deco" role="presentation">
+      <p class="section-eyebrow">Resultados</p>
+      <h2 class="section-headline">Founders que usam. Resultados que falam.</h2>
+      <div class="proof-aggregate" id="proof-counter">+47</div>
+      <p class="proof-aggregate-label">founders B2B já geraram conversas qualificadas com o Chattie</p>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof-card reveal reveal-d1">
+        <div class="proof-result">3 reuniões agendadas nos primeiros 7 dias</div>
+        <p class="proof-quote">"Eu perdia prospects qualificados porque demorava dias para responder. Com o Chattie, o follow-up acontece mesmo quando estou em reunião. Na primeira semana fechei 3 calls — sem ter feito nada manual."</p>
+        <div class="proof-author">
+          <div class="proof-author-inner">
+            <img src="https://i.pravatar.cc/60?img=12" alt="Mateus Rodrigues" class="proof-avatar">
+            <div class="proof-author-text">
+              <div class="proof-name">Mateus Rodrigues</div>
+              <div class="proof-role">CEO · Arquitetura Digital</div>
+            </div>
+          </div>
+        </div>
+        <div class="proof-before">Antes: DMs manuais + Notion como "CRM". Pipeline dependia da sua agenda.</div>
+      </div>
+      <div class="proof-card reveal reveal-d2">
+        <div class="proof-result">Pipeline de R$ 52k gerado em 30 dias</div>
+        <p class="proof-quote">"O Sandbox foi o que me convenceu. Finalmente consigo ver o que a IA vai dizer antes de disparar — sem arriscar minha reputação com um cliente importante. Nunca tive isso em nenhuma outra ferramenta."</p>
+        <div class="proof-author">
+          <div class="proof-author-inner">
+            <img src="https://i.pravatar.cc/60?img=25" alt="Ana Lima" class="proof-avatar">
+            <div class="proof-author-text">
+              <div class="proof-name">Ana Lima</div>
+              <div class="proof-role">Fundadora · Growthlab Consultoria</div>
+            </div>
+          </div>
+        </div>
+        <div class="proof-before">Antes: Só indicações. Nunca tinha prospectado ativamente no LinkedIn.</div>
+      </div>
+      <div class="proof-card reveal reveal-d3">
+        <div class="proof-result">Taxa de resposta de 34% — era 6% antes</div>
+        <p class="proof-quote">"Testei três ferramentas antes do Chattie. Nenhuma sabia continuar uma conversa — só disparavam sequência igual pra todo mundo. Aqui é diferente. O prospect responde porque parece humano, porque é."</p>
+        <div class="proof-author">
+          <div class="proof-author-inner">
+            <img src="https://i.pravatar.cc/60?img=33" alt="Rafael Nunes" class="proof-avatar">
+            <div class="proof-author-text">
+              <div class="proof-name">Rafael Nunes</div>
+              <div class="proof-role">Sócio · NB Ventures</div>
+            </div>
+          </div>
+        </div>
+        <div class="proof-before">Antes: Automação genérica. Estava sendo ignorado e até bloqueado por prospects.</div>
+      </div>
+      <div class="proof-card reveal reveal-d4">
+        <div class="proof-result">De 0 a 11 reuniões/mês em 3 semanas</div>
+        <p class="proof-quote">"Configurei em menos de 15 minutos. Na primeira semana já tinha 4 respostas qualificadas. Parece exagero mas é exatamente o que aconteceu — e eu nunca tinha prospectado pelo LinkedIn de forma sistemática antes."</p>
+        <div class="proof-author">
+          <div class="proof-author-inner">
+            <img src="https://i.pravatar.cc/60?img=49" alt="Camila Ferreira" class="proof-avatar">
+            <div class="proof-author-text">
+              <div class="proof-name">Camila Ferreira</div>
+              <div class="proof-role">Consultora · CF Advisory</div>
+            </div>
+          </div>
+        </div>
+        <div class="proof-before">Antes: Zero prospecção ativa. 100% dependente de indicações da rede.</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 2.5rem;">
+      <a href="#" class="btn btn-brand" style="font-size:1rem; padding:0.8rem 2rem; border-color: var(--black);">Começar agora →</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── PARA QUEM ──────────────────────────────────── -->
+<section class="icp-section">
+  <div class="section-header reveal">
+    <p class="section-eyebrow">Para quem é</p>
+    <h2 class="section-headline">O Chattie foi construído para um perfil específico.<br>Veja se é você.</h2>
+  </div>
+
+  <div class="icp-grid">
+    <div class="icp-card icp-yes reveal reveal-d1">
+      <div class="icp-card-header">
+        <span>✓</span> É para você se:
+      </div>
+      <ul class="icp-list">
+        <li><span class="icon">→</span> Você vende pelo LinkedIn hoje e quer mais previsibilidade no pipeline</li>
+        <li><span class="icon">→</span> Você já perdeu uma oportunidade porque demorou a responder um prospect</li>
+        <li><span class="icon">→</span> Você é founder, consultor ou prestador B2B com no máximo 1–3 pessoas vendendo</li>
+        <li><span class="icon">→</span> Você quer pipeline previsível sem contratar mais ninguém</li>
+        <li><span class="icon">→</span> Você acredita que vender bem é sobre conversa, não sobre volume de disparo</li>
+      </ul>
+    </div>
+    <div class="icp-card icp-no reveal reveal-d2">
+      <div class="icp-card-header">
+        <span>✗</span> Não é para você se:
+      </div>
+      <ul class="icp-list">
+        <li><span class="icon">→</span> Você não usa LinkedIn como canal de aquisição principal</li>
+        <li><span class="icon">→</span> Você quer uma ferramenta de spam em massa — mensagens idênticas para centenas de pessoas</li>
+        <li><span class="icon">→</span> Você não está disposto a configurar o sistema nos primeiros 10 minutos</li>
+        <li><span class="icon">→</span> Você tem uma equipe de SDR estruturada com ferramentas dedicadas</li>
+        <li><span class="icon">→</span> Você quer resultado sem nenhuma configuração prévia</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;" class="reveal">
+    <p style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--black);">Parece que é para você?</p>
+    <a href="#pricing" class="btn btn-brand" style="font-size: 1rem; padding: 0.8rem 2rem;">Começar grátis →</a>
+  </div>
+</section>
+
+<!-- ── PRICING ────────────────────────────────────── -->
+<div class="pricing-wrapper" id="pricing">
+<section class="pricing-section">
+  <div class="pricing-header section-header reveal">
+    <p class="section-eyebrow">Preços</p>
+    <h2 class="section-headline">Comece grátis. Escale quando fizer sentido.</h2>
+    <p class="section-sub" style="margin: 0 auto;">14 dias grátis no plano Solo. Sem cartão de crédito.</p>
+  </div>
+
+  <div class="pricing-anchor-wrap reveal">
+    <div class="pricing-anchor">
+      Ferramentas similares cobram <strong>R$ 697+/mês</strong>. O Solo começa em <strong>R$ 397</strong> — com mais inteligência de conversa.
+    </div>
+  </div>
+
+  <div class="pricing-toggle reveal">
+    <button class="toggle-btn active" data-period="monthly" onclick="setPeriod('monthly')">Mensal</button>
+    <button class="toggle-btn" data-period="semestral" onclick="setPeriod('semestral')">Semestral — economize 10%</button>
+    <button class="toggle-btn" data-period="anual" onclick="setPeriod('anual')">Anual — economize 25%</button>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- SOLO -->
+    <div class="price-card reveal reveal-d1">
+      <div class="price-card-name">Solo</div>
+      <div>
+        <div class="price-amount" id="pro-price">R$ 397</div>
+        <div class="price-period">/mês</div>
+      </div>
+      <p class="price-vencefy-anchor">Ferramentas similares cobram R$ 697. Você paga R$ 397.</p>
+      <p class="price-sub">Para founders que prospectam solo e querem pipeline previsível sem contratar SDR.</p>
+      <p class="price-scope">1 licença LinkedIn · Até 3 campanhas ativas</p>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li><span class="chk">✓</span> AI SDR conversacional (Autopilot + Copilot)</li>
+        <li><span class="chk">✓</span> Sandbox de mensagens (exclusivo no Brasil)</li>
+        <li><span class="chk">✓</span> Inbox unificada LinkedIn</li>
+        <li><span class="chk">✓</span> Follow-up inteligente com IA</li>
+        <li><span class="chk">✓</span> Prompts customizáveis</li>
+        <li><span class="chk">✓</span> Campaigns Manager</li>
+        <li><span class="chk">✓</span> Leads Manager (import CSV)</li>
+        <li><span class="chk">✓</span> Setup Wizard com IA</li>
+        <li><span class="chk">✓</span> Suporte em português</li>
+      </ul>
+      <a href="#" class="btn btn-brand price-cta-btn" style="border-color: var(--black);">Assinar agora →</a>
+      <p class="price-trust">14 dias grátis · Sem cartão de crédito · Cancele quando quiser</p>
+      <p class="price-micro">Configuração em 10 minutos. Primeira campanha sai hoje.</p>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="price-card featured reveal reveal-d2">
+      <div class="price-card-badge">★ MAIS POPULAR</div>
+      <div class="price-card-name">Growth</div>
+      <div>
+        <div class="price-amount" id="growth-price">R$ 997</div>
+        <div class="price-period">/mês</div>
+      </div>
+      <p class="price-sub">Para agências e consultores que operam múltiplas contas e precisam de escala real.</p>
+      <p class="price-scope">3 licenças LinkedIn · Campanhas ilimitadas</p>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li><span class="chk">✓</span> Tudo do Solo</li>
+        <li><span class="chk">✓</span> 3 contas LinkedIn simultâneas</li>
+        <li><span class="chk">✓</span> Gerenciamento multi-conta</li>
+        <li><span class="chk">✓</span> Analytics comparativo por conta</li>
+        <li><span class="chk">✓</span> Suporte prioritário</li>
+      </ul>
+      <a href="#" class="btn btn-dark price-cta-btn" style="border-color: var(--black);">Falar com a equipe →</a>
+      <p class="price-trust" style="color:rgba(0,0,0,0.5);">Sem cartão · Cancele quando quiser · Suporte em PT</p>
+    </div>
+
+    <!-- SCALE -->
+    <div class="price-card reveal reveal-d3">
+      <div class="price-card-name">Scale</div>
+      <div>
+        <div class="price-amount">R$ 1.997</div>
+        <div class="price-period">/mês</div>
+      </div>
+      <p class="price-sub">Para operações com volume alto, licenças múltiplas e Account Manager dedicado.</p>
+      <p class="price-scope">Licenças customizadas</p>
+      <p class="scale-trigger">Para quando você tiver 10+ leads qualificados/semana ou 3+ contas LinkedIn</p>
+      <hr class="price-divider">
+      <ul class="price-features">
+        <li><span class="chk">✓</span> Tudo do Growth</li>
+        <li><span class="chk">✓</span> Licenças ilimitadas</li>
+        <li><span class="chk">✓</span> Account Manager dedicado</li>
+        <li><span class="chk">✓</span> Onboarding assistido</li>
+        <li><span class="chk">✓</span> SLA garantido</li>
+        <li><span class="chk">✓</span> Condições personalizadas</li>
+      </ul>
+      <a href="#" class="btn btn-dark price-cta-btn" style="border-color: var(--black);">Agendar conversa →</a>
+    </div>
+
+  </div>
+
+  <div class="pricing-trust-bar reveal">
+    <span>SSL · Pagamento seguro</span>
+    <span>Suporte em português</span>
+    <span>Cancele quando quiser</span>
+    <span>14 dias grátis no Solo</span>
+  </div>
+  <p class="pricing-footer reveal">
+    Todos os planos incluem: AI SDR conversacional · Sandbox de mensagens · Prompts customizáveis · Suporte em português
+  </p>
+</section>
+</div>
+
+<!-- ── FAQ ───────────────────────────────────────── -->
+<section class="faq-section" id="faq">
+  <div class="section-header reveal" style="text-align: center; max-width: 100%;">
+    <p class="section-eyebrow" style="text-align: center;">Perguntas frequentes</p>
+    <h2 class="section-headline" style="text-align: center; max-width: 100%;">Tudo que você precisa saber.</h2>
+  </div>
+
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        O que é o Sandbox de mensagens?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        O Sandbox permite simular conversas completas com seus prospects reais antes de enviar qualquer mensagem. Você escolhe a oferta, seleciona um lead, ajusta o prompt — e vê palavra por palavra o que a IA vai dizer. Não gostou? Ajusta. Aprovou? Ativa a campanha. É o único Sandbox de mensagens do mercado brasileiro.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Em quanto tempo vejo resultado?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Primeiros contatos saem no mesmo dia. Respostas qualificadas chegam em 3–7 dias. Agendamentos na primeira semana. Pipeline consistente em 30 dias de uso ativo. A configuração leva 10 minutos — e a primeira campanha pode sair hoje.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Preciso de equipe técnica para configurar?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Não. O Setup Wizard com IA faz o trabalho pesado: você cola a URL do seu site, ele analisa sua oferta e cria o perfil do AI SDR automaticamente. Em 10 minutos você está pronto para prospectar. Sem configuração técnica, sem onboarding de semanas.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        O que acontece depois do trial de 14 dias?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Você decide se quer continuar. Sem cobrança automática surpresa. Se quiser assinar, escolhe o plano que faz sentido para sua operação. Se não quiser, sua conta simplesmente encerra — sem burocracia.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        É diferente de outros softwares de LinkedIn?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim — em duas coisas fundamentais. Primeiro: o Sandbox de mensagens, único no Brasil, que permite testar cada conversa antes de disparar. Segundo: o Chattie conversa com contexto real, não dispara sequências iguais para todo mundo. Ferramentas de automação genéricas disparam mensagens. O Chattie conversa.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Vou ser banido do LinkedIn?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Não. O Chattie respeita todos os limites do LinkedIn: 50–80 conexões/dia, até 100 mensagens/dia. O Autopilot foi calibrado pela TRA — que opera LinkedIn todos os dias para dezenas de clientes e sabe exatamente o que causa restrição.
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Como funciona o suporte?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        Suporte em português, por humanos, via chat. No plano Growth e Scale, atendimento prioritário. Sem ticket, sem espera de 48h.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ──────────────────────────────────── -->
+<div class="cta-final-wrapper">
+<section class="cta-final">
+  <h2 class="cta-final-headline reveal">
+    Cada dia sem sistema é uma conversa que você não vai ter.
+  </h2>
+  <p class="cta-final-sub reveal">
+    Você já sabe como a história termina quando o follow-up atrasa.<br>
+    O Chattie existe para que ela não aconteça mais.
+  </p>
+
+  <ul class="cta-final-list reveal">
+    <li><span class="chk">✓</span> Sua primeira campanha ativa ainda hoje — setup completo em 10 minutos</li>
+    <li><span class="chk">✓</span> Zero risco de reputação — você aprova cada mensagem antes de disparar</li>
+    <li><span class="chk">✓</span> Respostas qualificadas chegam em 3–7 dias. Sem você fazer nada.</li>
+  </ul>
+
+  <a href="#" class="btn btn-black reveal" style="font-size: 1.05rem; padding: 0.85rem 2.5rem; min-height: 56px; border: var(--border-card);">Começar agora →</a>
+  <p class="cta-final-trust reveal">14 dias grátis. Se não gerar nenhuma conversa, cancele sem perguntas.</p>
+
+  <div class="cta-final-micro reveal">
+    <strong>Automação envia mensagens. O Chattie conversa.</strong>
+    +47 founders B2B já começaram esta semana.
+  </div>
+</section>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">
+      <img src="brand_assets/Back Chattie - Full Mark.png" alt="Chattie">
+    </a>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Produto</h4>
+        <a href="#">Como funciona</a>
+        <a href="#">Sandbox</a>
+        <a href="#">Preços</a>
+        <a href="#">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="#">Sobre a TRA</a>
+        <a href="#">Blog</a>
+        <a href="#">Carreiras</a>
+        <a href="#">Imprensa</a>
+      </div>
+      <div class="footer-col">
+        <h4>Recursos</h4>
+        <a href="#">Documentação</a>
+        <a href="#">Central de ajuda</a>
+        <a href="#">Comunidade</a>
+        <a href="#">API</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+        <a href="#">Cookies</a>
+        <a href="#">Segurança</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Chattie. Todos os direitos reservados.</span>
+    <span>Automação envia mensagens. O Chattie conversa. <span class="star-deco">✦</span></span>
+  </div>
+</footer>
+
+<!-- ── MOBILE STICKY CTA ─────────────────────────── -->
+<div class="mobile-sticky-cta" aria-hidden="true">
+  <a href="#pricing" class="btn btn-brand" style="border-color: var(--black);">Começar grátis →</a>
+  <a href="#como-funciona" class="btn btn-outline" style="border-width: 2px;">Como funciona</a>
+</div>
+
+<!-- ── SCROLL TO TOP ──────────────────────────────── -->
+<button id="scroll-top-btn" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+<script>
+  /* ── PRICING TOGGLE ─────────────────────────────── */
+  const prices = {
+    monthly:   { pro: 'R$ 397', growth: 'R$ 997' },
+    semestral: { pro: 'R$ 357', growth: 'R$ 897' },
+    anual:     { pro: 'R$ 297', growth: 'R$ 748' }
+  };
+
+  function setPeriod(period) {
+    document.getElementById('pro-price').textContent    = prices[period].pro;
+    document.getElementById('growth-price').textContent = prices[period].growth;
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.period === period);
+    });
+  }
+
+  /* ── FAQ ACCORDION ──────────────────────────────── */
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.faq-question.open').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
+  /* ── SCROLL REVEAL ──────────────────────────────── */
+  // Apply hidden state only to elements already below the fold
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach(el => {
+    if (el.getBoundingClientRect().top > window.innerHeight * 0.92) {
+      el.classList.add('pre-reveal');
+    }
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('pre-reveal');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* ── COUNTER ANIMATION ──────────────────────────── */
+  const counterEl = document.getElementById('proof-counter');
+  if (counterEl) {
+    let animated = false;
+    const counterObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !animated) {
+        animated = true;
+        let start = 0;
+        const target = 47;
+        const duration = 1400;
+        const startTime = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counterEl.textContent = '+' + Math.floor(eased * target);
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        counterObserver.unobserve(counterEl);
+      }
+    }, { threshold: 0.5 });
+    counterObserver.observe(counterEl);
+  }
+
+  /* ── FAQ INIT: open first item ──────────────────── */
+  const firstFaq = document.querySelector('.faq-question');
+  if (firstFaq) {
+    firstFaq.classList.add('open');
+    firstFaq.nextElementSibling.classList.add('open');
+  }
+
+  /* ── HERO CHAT ANIMATION ────────────────────────── */
+  (function animHeroChat() {
+    const items = [
+      { id: 'hcm1', delay: 500  },
+      { id: 'hcm2', delay: 1250 },
+      { id: 'hcm3', delay: 2100 },
+      { id: 'hcm4', delay: 3050 },
+    ];
+    items.forEach(({ id, delay }) => {
+      const el = document.getElementById(id);
+      if (el) setTimeout(() => el.classList.add('hc-visible'), delay);
+    });
+  })();
+
+  /* ── SCROLL TO TOP ──────────────────────────────── */
+  const scrollBtn = document.getElementById('scroll-top-btn');
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', () => {
+    scrollBtn.classList.remove('rolling');
+    void scrollBtn.offsetWidth; // force reflow to restart animation
+    scrollBtn.classList.add('rolling');
+    scrollBtn.addEventListener('animationend', () => scrollBtn.classList.remove('rolling'), { once: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>

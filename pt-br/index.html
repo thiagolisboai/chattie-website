@@ -3067,10 +3067,11 @@
   (function() {
     const override = localStorage.getItem('chattie-lang-override');
     if (override) return;
-    fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
+    /* api.country.is supports HTTPS on free tier — ip-api.com does not */
+    fetch('https://api.country.is/', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
-        if (data.countryCode !== 'BR') {
+        if (data.country !== 'BR') {
           window.location.href = '/';
         }
       })

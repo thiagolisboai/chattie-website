@@ -25,7 +25,9 @@ const mime = {
 
 const server = http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split('?')[0]);
-  if (urlPath === '/') urlPath = '/index.html';
+  if (urlPath === '/' || urlPath.endsWith('/')) urlPath = urlPath + 'index.html';
+  // Normalize double slashes
+  urlPath = urlPath.replace(/\/+/g, '/');
 
   const filePath = path.join(__dirname, urlPath);
   const ext = path.extname(filePath).toLowerCase();

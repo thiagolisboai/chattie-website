@@ -251,7 +251,7 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: 46fr 54fr;
-      gap: 1.5rem;
+      gap: 4rem;
       align-items: center;
     }
     .hero-left { display: flex; flex-direction: column; }
@@ -1537,25 +1537,47 @@
       font-weight: 800;
       padding: 0 2px;
     }
+    /* Contact list — animated reordering */
+    .hc-list-contacts {
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      height: 204px; /* 3 × 68px */
+    }
     .hc-list-contact {
+      position: absolute;
+      width: 100%;
+      height: 68px;
+      box-sizing: border-box;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.4rem;
-      padding: 0.56rem 0.52rem;
+      padding: 0 0.52rem;
       border-bottom: 1px solid #f5f5ef;
       cursor: pointer;
       border-left: 3px solid transparent;
+      transition: top 0.65s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
     }
     .hc-list-contact-active {
       background: #fafaf5;
       border-left-color: var(--rust);
     }
     @keyframes contactActivate {
-      0%   { background: rgba(229,123,51,0.18); border-left-color: var(--rust); }
-      100% { background: #fafaf5; border-left-color: var(--rust); }
+      0%   { background: rgba(229,123,51,0.22); }
+      100% { background: #fafaf5; }
     }
     .hc-list-contact-active.contact-flash {
-      animation: contactActivate 0.9s ease-out forwards;
+      animation: contactActivate 1.1s ease-out forwards;
+    }
+    /* new-msg ping dot */
+    .hc-new-ping {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--rust); flex-shrink: 0;
+      animation: pingPulse 1s ease-out forwards;
+    }
+    @keyframes pingPulse {
+      0%   { transform: scale(1.4); opacity: 1; }
+      100% { transform: scale(1);   opacity: 1; }
     }
     .hc-list-info { flex: 1; min-width: 0; }
     .hc-list-name { font-size: 0.7rem; font-weight: 700; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1578,13 +1600,19 @@
       font-weight: 800;
       padding: 0 3px;
     }
+    .hc-unread-active {
+      background: var(--rust);
+      color: var(--white);
+    }
 
     /* ③ Chat conversation area */
     .hc-avatar {
       width: 30px; height: 30px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 0.6rem; font-weight: 800; flex-shrink: 0; letter-spacing: 0.01em;
+      overflow: hidden; object-fit: cover;
     }
+    .hc-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
     .hc-avatar-sm { width: 23px; height: 23px; font-size: 0.53rem; }
     .hc-avatar-teal { background: var(--teal); color: var(--white); }
     .hc-avatar-gray { background: #e5e5e0; color: #888; }
@@ -1800,22 +1828,23 @@
             <button class="hc-tab hc-tab-active">All <span class="hc-tab-badge">3</span></button>
             <button class="hc-tab">Active <span class="hc-tab-badge" style="background:#bbb;">2</span></button>
           </div>
-          <!-- Contact 1 — active/selected -->
-          <div class="hc-list-contact hc-list-contact-active" id="hcl-1">
-            <div class="hc-avatar hc-avatar-teal">CM</div>
+          <div class="hc-list-contacts" id="hc-list-contacts">
+          <!-- Contact 1 — starts at top (index 0) -->
+          <div class="hc-list-contact hc-list-contact-active" id="hcl-1" style="top:0">
+            <div class="hc-avatar"><img src="https://i.pravatar.cc/60?img=11" alt="Carlos Medina"></div>
             <div class="hc-list-info">
               <div class="hc-list-name">Carlos Medina</div>
               <div class="hc-list-preview">isso é bot né hahaha</div>
               <div class="hc-list-campaign">Q1 Outreach</div>
             </div>
             <div class="hc-list-meta">
-              <span class="hc-list-time">2h</span>
-              <span class="hc-list-unread">0</span>
+              <span class="hc-list-time">Agora</span>
+              <span class="hc-list-unread hc-unread-active">1</span>
             </div>
           </div>
-          <!-- Contact 2 -->
-          <div class="hc-list-contact" id="hcl-2">
-            <div class="hc-avatar hc-avatar-gray">MC</div>
+          <!-- Contact 2 — starts at index 1 -->
+          <div class="hc-list-contact" id="hcl-2" style="top:68px">
+            <div class="hc-avatar"><img src="https://i.pravatar.cc/60?img=47" alt="Mariana Costa"></div>
             <div class="hc-list-info">
               <div class="hc-list-name">Mariana Costa</div>
               <div class="hc-list-preview">87k? Sério?</div>
@@ -1823,12 +1852,12 @@
             </div>
             <div class="hc-list-meta">
               <span class="hc-list-time">4h</span>
-              <span class="hc-list-unread">1</span>
+              <span class="hc-list-unread">0</span>
             </div>
           </div>
-          <!-- Contact 3 -->
-          <div class="hc-list-contact" id="hcl-3">
-            <div class="hc-avatar" style="background:rgba(244,177,63,0.2);color:#b87800;">RB</div>
+          <!-- Contact 3 — starts at index 2 -->
+          <div class="hc-list-contact" id="hcl-3" style="top:136px">
+            <div class="hc-avatar"><img src="https://i.pravatar.cc/60?img=15" alt="Ricardo Barros"></div>
             <div class="hc-list-info">
               <div class="hc-list-name">Ricardo Barros</div>
               <div class="hc-list-preview">achei que era concorrência</div>
@@ -1839,12 +1868,13 @@
               <span class="hc-list-unread">0</span>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- ③ Chat conversation -->
         <div class="hc-conv">
           <div class="hc-conv-header" id="hc-header">
-            <div class="hc-avatar hc-avatar-teal hc-avatar-sm" id="hc-header-avatar">CM</div>
+            <div class="hc-avatar hc-avatar-sm" id="hc-header-avatar"><img src="https://i.pravatar.cc/60?img=11" alt="Carlos Medina" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
             <div>
               <div class="hc-conv-name" id="hc-header-name">Carlos Medina</div>
               <div class="hc-conv-meta" id="hc-header-meta">Q1 Outreach · CEO</div>
@@ -2733,41 +2763,44 @@
 
   /* ── HERO CHAT ANIMATION — 3-conversation slide carousel ─── */
   (function animHeroConversations() {
+    const CONTACT_H = 68;
     const convData = [
       {
         slide: 'hc-conv-1',
         listId: 'hcl-1',
-        avatarInitials: 'CM',
-        avatarClass: 'hc-avatar-teal',
+        photo: 'https://i.pravatar.cc/60?img=11',
         name: 'Carlos Medina',
         meta: 'Q1 Outreach · CEO',
         copilot: 'Explicar como o Chattie funciona de forma simples →',
+        preview: 'isso é bot né hahaha',
+        time: 'Agora',
       },
       {
         slide: 'hc-conv-2',
         listId: 'hcl-2',
-        avatarInitials: 'MC',
-        avatarClass: 'hc-avatar-gray',
+        photo: 'https://i.pravatar.cc/60?img=47',
         name: 'Mariana Costa',
         meta: 'Q1 Outreach · Head of Growth',
         copilot: 'Enviar o case de SaaS B2B como prova →',
+        preview: '87k? Sério?',
+        time: 'Agora',
       },
       {
         slide: 'hc-conv-3',
         listId: 'hcl-3',
-        avatarInitials: 'RB',
-        avatarClass: 'hc-avatar-gray',
-        avatarStyle: 'background:rgba(244,177,63,0.2);color:#b87800;',
+        photo: 'https://i.pravatar.cc/60?img=15',
         name: 'Ricardo Barros',
         meta: 'Q1 Outreach · VP Sales',
         copilot: 'Propor uma demo mostrando integracao com SDR →',
+        preview: 'achei que era concorrência',
+        time: 'Agora',
       },
     ];
 
     // Message reveal delays within each conversation (4 msgs + typing = 5 items)
-    const msgDelays = [400, 1400, 2600, 3900, 5400];
+    const msgDelays = [700, 2400, 4400, 6800, 9400];
     // How long a conversation plays before sliding to the next
-    const convDuration = 8500; // ms
+    const convDuration = 13500; // ms
 
     let current = 0;
     let timeouts = [];
@@ -2778,31 +2811,50 @@
     }
 
     function updateHeader(data) {
-      const avatar = document.getElementById('hc-header-avatar');
-      const name   = document.getElementById('hc-header-name');
-      const meta   = document.getElementById('hc-header-meta');
+      const avatar  = document.getElementById('hc-header-avatar');
+      const name    = document.getElementById('hc-header-name');
+      const meta    = document.getElementById('hc-header-meta');
       const copilot = document.getElementById('hc-copilot-text');
       if (!avatar) return;
-      avatar.textContent = data.avatarInitials;
-      avatar.className   = 'hc-avatar hc-avatar-sm ' + data.avatarClass;
-      if (data.avatarStyle) avatar.style.cssText = data.avatarStyle;
-      else avatar.removeAttribute('style');
-      name.textContent   = data.name;
-      meta.textContent   = data.meta;
+      const img = avatar.querySelector('img');
+      if (img) { img.src = data.photo; img.alt = data.name; }
+      avatar.className = 'hc-avatar hc-avatar-sm';
+      avatar.removeAttribute('style');
+      name.textContent    = data.name;
+      meta.textContent    = data.meta;
       copilot.textContent = data.copilot;
     }
 
-    function updateList(activeListId) {
-      convData.forEach(d => {
-        const el = document.getElementById(d.listId);
+    // Order state: convData indices ordered from top to bottom in the list
+    let listOrder = [0, 1, 2];
+
+    function reorderList(activeIndex) {
+      // Move activeIndex to position 0, keep others in relative order
+      listOrder = [activeIndex, ...listOrder.filter(i => i !== activeIndex)];
+
+      listOrder.forEach((origIdx, position) => {
+        const el = document.getElementById(convData[origIdx].listId);
         if (!el) return;
-        if (d.listId === activeListId) {
+        el.style.top = (position * CONTACT_H) + 'px';
+
+        if (origIdx === activeIndex) {
           el.classList.add('hc-list-contact-active');
-          // Flash animation to signal new active contact
+          // Update preview + time to "Agora" and show unread ping
+          const preview = el.querySelector('.hc-list-preview');
+          const timeEl  = el.querySelector('.hc-list-time');
+          const unread  = el.querySelector('.hc-list-unread');
+          if (preview) preview.textContent = convData[origIdx].preview;
+          if (timeEl)  timeEl.textContent  = 'Agora';
+          if (unread)  { unread.textContent = '1'; unread.classList.add('hc-unread-active'); }
+          // Flash highlight
           el.classList.remove('contact-flash');
-          void el.offsetWidth; // force reflow
+          void el.offsetWidth;
           el.classList.add('contact-flash');
-          setTimeout(() => el.classList.remove('contact-flash'), 1000);
+          setTimeout(() => el.classList.remove('contact-flash'), 1100);
+          // Clear unread after a moment
+          setTimeout(() => {
+            if (unread) { unread.textContent = '0'; unread.classList.remove('hc-unread-active'); }
+          }, 2500);
         } else {
           el.classList.remove('hc-list-contact-active', 'contact-flash');
         }
@@ -2833,7 +2885,7 @@
 
       // Update header + list
       updateHeader(data);
-      updateList(data.listId);
+      reorderList(index);
 
       // Reveal messages one by one
       if (upcomingSlide) {

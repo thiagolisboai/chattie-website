@@ -7,6 +7,9 @@
  * - BR visitors on /         → redirect to /pt-br/
  * - Non-BR visitors on /pt-br → redirect to /
  * - If the user manually chose a language (chattie-lang cookie), respect it.
+ *
+ * NOTE: request.cookies is Next.js-only. For a plain static site on Vercel
+ * we parse cookies from the raw Cookie header instead.
  */
 
 export const config = {
@@ -17,9 +20,15 @@ export default function middleware(request) {
   const { pathname } = new URL(request.url);
   const country = request.geo?.country ?? '';
 
+  // Parse cookies from the raw header (standard Web API — works on all Vercel deployments)
+  const cookieHeader = request.headers.get('cookie') || '';
+  const override = cookieHeader
+    .split(';')
+    .map(c => c.trim().split('='))
+    .find(([k]) => k === 'chattie-lang')?.[1];
+
   // Respect manual language preference set by setLang() in the HTML
-  const override = request.cookies.get('chattie-lang')?.value;
-  if (override) return; // user already chose — do nothing
+  if (override) return;
 
   // Brazilian visitor hitting the EN root → send to PT
   if (pathname === '/' && country === 'BR') {

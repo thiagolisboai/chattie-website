@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chattie — O Chattie conversa. Automação apenas envia mensagens.</title>
+  <title>Chattie — Automações apenas enviam mensagens. O Chattie, conversa.</title>
   <link rel="icon" type="image/png" href="brand_assets/Black Chattie - Face Symbol.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -153,17 +153,29 @@
       font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #777;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.13em;
+      color: #666;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      flex-shrink: 0;
+      border-radius: 2px;
     }
     .section-headline {
       font-family: var(--font-display);
       font-size: clamp(2.1rem, 3.8vw, 3rem);
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-      margin-bottom: 0.75rem;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.85rem;
     }
     .section-sub {
       font-size: 1.05rem;
@@ -208,6 +220,17 @@
     .reveal-d3 { transition-delay: 0.24s; }
     .reveal-d4 { transition-delay: 0.32s; }
 
+    /* ── GRAIN TEXTURE ───────────────────────────── */
+    .grain-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
     /* ── HERO ────────────────────────────────────── */
     .hero-wrapper {
       background-color: var(--cream);
@@ -216,14 +239,19 @@
       background-position: top right;
       background-repeat: no-repeat;
       border-bottom: var(--border);
+      position: relative;
+      min-height: calc(100vh - 61px);
+      display: flex;
+      align-items: center;
     }
     .hero {
-      padding: 4.5rem 1.5rem 5rem;
+      padding: 2rem 1.5rem 2.5rem;
       max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 55fr 45fr;
-      gap: 2rem;
+      grid-template-columns: 46fr 54fr;
+      gap: 1.5rem;
       align-items: center;
     }
     .hero-left { display: flex; flex-direction: column; }
@@ -231,67 +259,68 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.14);
       border-radius: 100px;
       padding: 0.3rem 0.9rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      color: #555;
-      margin-bottom: 1.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: #444;
+      margin-bottom: 1.1rem;
       width: fit-content;
+      text-transform: uppercase;
     }
     .hero-headline {
       font-family: var(--font-display);
-      font-size: clamp(2.75rem, 6vw, 4.5rem);
+      font-size: clamp(2.25rem, 4.5vw, 3.6rem);
       font-weight: 800;
       line-height: 1.0;
       letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
-      max-width: 660px;
+      margin-bottom: 1rem;
+      max-width: 620px;
     }
     .hero-headline em {
       font-style: italic;
       color: var(--rust);
     }
     .hero-sub {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 400;
-      max-width: 500px;
-      line-height: 1.65;
-      margin-bottom: 2rem;
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
       color: #2a2a2a;
     }
     .hero-cta {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.25rem;
       flex-wrap: wrap;
-      margin-bottom: 0.875rem;
+      margin-bottom: 0.65rem;
     }
     .hero-trust {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: #666;
-      margin-bottom: 2rem;
+      margin-bottom: 0.85rem;
     }
     .hero-social-proof {
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
       background: var(--white);
       border: var(--border-card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 0.75rem 1.25rem;
-      font-size: 0.88rem;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.84rem;
       font-weight: 600;
       line-height: 1.4;
       width: fit-content;
     }
     .hero-social-proof-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--teal);
       flex-shrink: 0;
@@ -303,7 +332,7 @@
       justify-content: center;
     }
     .hero-mascot {
-      width: min(320px, 90%);
+      width: min(460px, 100%);
       height: auto;
       animation: mascotBob 3.5s ease-in-out infinite;
       filter: drop-shadow(6px 6px 0 rgba(0,0,0,0.1));
@@ -461,11 +490,13 @@
     .sandbox-wrapper {
       background-color: var(--teal);
       background-image:
-        radial-gradient(ellipse at 90% 15%, rgba(102,186,198,0.35) 0%, transparent 55%),
-        radial-gradient(ellipse at 10% 85%, rgba(183,195,176,0.2) 0%, transparent 50%);
+        radial-gradient(ellipse at 90% 10%, rgba(102,186,198,0.45) 0%, transparent 50%),
+        radial-gradient(ellipse at 5% 90%, rgba(183,195,176,0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.12) 0%, transparent 70%);
       color: var(--white);
       border-top: var(--border);
       border-bottom: var(--border);
+      position: relative;
     }
     .sandbox-section {
       padding: 7.5rem 1.5rem;
@@ -723,6 +754,11 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 1.5rem;
+      transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s cubic-bezier(0.16,1,0.3,1);
+    }
+    .op-bullet:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
     }
     .op-bullet-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
     .op-bullet-title {
@@ -780,12 +816,17 @@
       background: var(--cream);
       border: var(--border-card);
       border-radius: var(--radius);
-      box-shadow: 4px 4px 0 rgba(244,177,63,0.25);
+      box-shadow: 4px 4px 0 rgba(244,177,63,0.45);
       padding: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
       color: var(--black);
+      transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s cubic-bezier(0.16,1,0.3,1);
+    }
+    .proof-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 6px 6px 0 rgba(244,177,63,0.6);
     }
     .proof-result {
       font-family: var(--font-display);
@@ -974,9 +1015,9 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: #aaa;
+      color: #777;
     }
-    .price-card.featured .price-scope { color: rgba(0,0,0,0.45); }
+    .price-card.featured .price-scope { color: rgba(0,0,0,0.55); }
     .price-features {
       list-style: none;
       display: flex;
@@ -1003,8 +1044,22 @@
       background: var(--black);
       color: var(--white);
     }
-    .price-trust { font-size: 0.75rem; text-align: center; color: #888; }
-    .price-card.featured .price-trust { color: rgba(0,0,0,0.45); }
+    .price-trust { font-size: 0.75rem; text-align: center; color: #666; }
+    .price-card.featured .price-trust { color: rgba(0,0,0,0.5); }
+    .price-consult-block { display: flex; flex-direction: column; gap: 0.25rem; }
+    .price-consult {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      font-style: italic;
+      color: var(--teal);
+    }
+    .price-consult ~ .price-period,
+    .price-consult-block .price-period { color: var(--teal); opacity: 0.7; }
+    .price-card.featured .price-consult { color: var(--cream); }
+    .price-card.featured .price-consult-block .price-period { color: var(--cream); opacity: 0.7; }
     .scale-trigger {
       font-size: 0.8rem;
       font-weight: 600;
@@ -1037,7 +1092,7 @@
       text-align: center;
       margin-top: 1.5rem;
       font-size: 0.82rem;
-      color: #888;
+      color: #666;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1046,6 +1101,20 @@
     }
     .pricing-trust-bar span::before { content: '·'; margin-right: 1.5rem; }
     .pricing-trust-bar span:first-child::before { display: none; }
+    .price-card:not(.featured) {
+      transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s cubic-bezier(0.16,1,0.3,1);
+    }
+    .price-card:not(.featured):hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .price-card.featured {
+      transition: transform 0.18s cubic-bezier(0.16,1,0.3,1), box-shadow 0.18s cubic-bezier(0.16,1,0.3,1);
+    }
+    .price-card.featured:hover {
+      transform: translateY(-12px);
+      box-shadow: 8px 8px 0 var(--black);
+    }
 
     /* ── FAQ ────────────────────────────────────── */
     .faq-section {
@@ -1105,6 +1174,8 @@
       color: var(--black);
       border-top: var(--border);
       border-bottom: var(--border);
+      position: relative;
+      overflow: hidden;
     }
     .cta-final {
       padding: 8rem 1.5rem;
@@ -1167,6 +1238,25 @@
       background: var(--black);
       color: var(--white);
       padding: 3.5rem 1.5rem 2rem;
+      overflow: hidden;
+    }
+    .footer-wordmark {
+      width: 140%;
+      margin-left: -20%;
+      margin-top: 2rem;
+      margin-bottom: -7rem;
+      pointer-events: none;
+      user-select: none;
+      display: block;
+      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+    }
+    .footer-wordmark img {
+      width: 100%;
+      height: auto;
+      filter: invert(1);
+      opacity: 0.18;
+      display: block;
     }
     .footer-inner {
       max-width: 1200px;
@@ -1297,7 +1387,7 @@
     /* ── HERO CHAT MOCK ─────────────────────────────── */
     .hero-chat {
       width: 100%;
-      max-width: 500px;
+      max-width: 648px;
       background: var(--white);
       border: var(--border-card);
       border-radius: 12px;
@@ -1312,11 +1402,11 @@
       align-items: center;
       gap: 0.35rem;
     }
-    .hc-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-    .hc-url { margin-left: 0.65rem; font-size: 0.65rem; color: #666; font-family: monospace; }
+    .hc-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .hc-url { margin-left: 0.65rem; font-size: 0.72rem; color: #666; font-family: monospace; }
 
     /* 3-panel layout: nav | list | chat */
-    .hc-body { display: grid; grid-template-columns: 80px 122px 1fr; min-height: 340px; }
+    .hc-body { display: grid; grid-template-columns: 86px 136px 1fr; min-height: 415px; }
 
     /* ① Nav sidebar */
     .hc-nav {
@@ -1336,7 +1426,7 @@
       border-bottom: 1px solid #e5e5e0;
       margin-bottom: 0.35rem;
     }
-    .hc-nav-logo img { width: 24px; height: 24px; object-fit: contain; }
+    .hc-nav-logo img { width: 28px; height: 28px; object-fit: contain; }
     .hc-nav-wizard {
       display: flex;
       align-items: center;
@@ -1344,7 +1434,7 @@
       background: rgba(244,177,63,0.18);
       border-radius: 5px;
       padding: 0.3rem 0.42rem;
-      font-size: 0.55rem;
+      font-size: 0.64rem;
       font-weight: 700;
       color: #b87800;
       margin-bottom: 0.3rem;
@@ -1352,7 +1442,7 @@
       overflow: hidden;
     }
     .hc-nav-section {
-      font-size: 0.43rem;
+      font-size: 0.5rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.09em;
@@ -1363,9 +1453,9 @@
       display: flex;
       align-items: center;
       gap: 0.25rem;
-      padding: 0.26rem 0.42rem;
+      padding: 0.3rem 0.42rem;
       border-radius: 5px;
-      font-size: 0.55rem;
+      font-size: 0.64rem;
       font-weight: 500;
       color: #777;
       white-space: nowrap;
@@ -1381,7 +1471,7 @@
     .hc-nav-credits {
       margin-top: auto;
       padding: 0.4rem 0.42rem;
-      font-size: 0.51rem;
+      font-size: 0.6rem;
       font-weight: 700;
       color: var(--rust);
       border-top: 1px solid #e5e5e0;
@@ -1406,8 +1496,8 @@
       background: #f5f5ef;
       border: 1px solid #e8e8e3;
       border-radius: 5px;
-      padding: 0.2rem 0.42rem;
-      font-size: 0.55rem;
+      padding: 0.22rem 0.42rem;
+      font-size: 0.64rem;
       color: #bbb;
       display: flex;
       align-items: center;
@@ -1422,8 +1512,8 @@
       display: flex;
       align-items: center;
       gap: 0.18rem;
-      padding: 0.32rem 0.28rem;
-      font-size: 0.53rem;
+      padding: 0.36rem 0.32rem;
+      font-size: 0.62rem;
       font-weight: 600;
       color: #bbb;
       background: none;
@@ -1450,8 +1540,8 @@
     .hc-list-contact {
       display: flex;
       align-items: flex-start;
-      gap: 0.36rem;
-      padding: 0.46rem 0.48rem;
+      gap: 0.4rem;
+      padding: 0.56rem 0.52rem;
       border-bottom: 1px solid #f5f5ef;
       cursor: pointer;
       border-left: 3px solid transparent;
@@ -1460,12 +1550,21 @@
       background: #fafaf5;
       border-left-color: var(--rust);
     }
+    @keyframes contactActivate {
+      0%   { background: rgba(229,123,51,0.18); border-left-color: var(--rust); }
+      100% { background: #fafaf5; border-left-color: var(--rust); }
+    }
+    .hc-list-contact-active.contact-flash {
+      animation: contactActivate 0.9s ease-out forwards;
+    }
     .hc-list-info { flex: 1; min-width: 0; }
-    .hc-list-name { font-size: 0.6rem; font-weight: 700; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .hc-list-preview { font-size: 0.54rem; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.1rem; }
-    .hc-list-campaign { font-size: 0.5rem; color: #ccc; margin-top: 0.08rem; }
+    .hc-list-name { font-size: 0.7rem; font-weight: 700; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hc-list-contact:not(.hc-list-contact-active) .hc-list-name { color: #999; }
+    .hc-list-contact:not(.hc-list-contact-active) .hc-list-preview { color: #ccc; }
+    .hc-list-preview { font-size: 0.62rem; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.1rem; }
+    .hc-list-campaign { font-size: 0.58rem; color: #ccc; margin-top: 0.08rem; }
     .hc-list-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.13rem; flex-shrink: 0; }
-    .hc-list-time { font-size: 0.49rem; color: #bbb; }
+    .hc-list-time { font-size: 0.56rem; color: #bbb; }
     .hc-list-unread {
       display: inline-flex;
       align-items: center;
@@ -1482,11 +1581,11 @@
 
     /* ③ Chat conversation area */
     .hc-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
+      width: 30px; height: 30px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.58rem; font-weight: 800; flex-shrink: 0; letter-spacing: 0.01em;
+      font-size: 0.6rem; font-weight: 800; flex-shrink: 0; letter-spacing: 0.01em;
     }
-    .hc-avatar-sm { width: 22px; height: 22px; font-size: 0.52rem; }
+    .hc-avatar-sm { width: 23px; height: 23px; font-size: 0.53rem; }
     .hc-avatar-teal { background: var(--teal); color: var(--white); }
     .hc-avatar-gray { background: #e5e5e0; color: #888; }
     .hc-conv { display: flex; flex-direction: column; }
@@ -1497,30 +1596,30 @@
       align-items: center;
       gap: 0.48rem;
     }
-    .hc-conv-name { font-size: 0.7rem; font-weight: 700; color: var(--black); }
-    .hc-conv-meta { font-size: 0.55rem; color: #999; }
+    .hc-conv-name { font-size: 0.74rem; font-weight: 700; color: var(--black); }
+    .hc-conv-meta { font-size: 0.58rem; color: #999; }
     .hc-ai-badge {
       margin-left: auto;
-      font-size: 0.52rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      font-size: 0.54rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
       color: var(--teal); background: rgba(47,100,81,0.1);
-      padding: 0.16rem 0.44rem; border-radius: 100px; white-space: nowrap;
+      padding: 0.15rem 0.44rem; border-radius: 100px; white-space: nowrap;
     }
     .hc-messages {
       flex: 1;
-      padding: 0.75rem 0.7rem;
-      display: flex; flex-direction: column; gap: 0.46rem;
       overflow: hidden;
+      position: relative;
     }
     .hc-msg {
-      max-width: 87%;
-      padding: 0.46rem 0.68rem;
+      max-width: 88%;
+      padding: 0.44rem 0.7rem;
       border-radius: 10px;
-      font-size: 0.68rem;
-      line-height: 1.46;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      word-break: break-word;
     }
     .hc-msg-out { background: var(--teal); color: var(--white); align-self: flex-end; border-bottom-right-radius: 3px; }
     .hc-msg-in  { background: #f0f0eb; color: #333; align-self: flex-start; border-bottom-left-radius: 3px; }
-    .hc-msg-time { font-size: 0.51rem; opacity: 0.55; margin-top: 0.22rem; text-align: right; }
+    .hc-msg-time { font-size: 0.52rem; opacity: 0.55; margin-top: 0.18rem; text-align: right; }
     .hc-msg-in .hc-msg-time { text-align: left; }
     .hc-typing {
       display: flex; align-items: center; gap: 0.25rem;
@@ -1540,9 +1639,9 @@
     }
     .hc-copilot {
       display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.52rem 0.75rem;
+      padding: 0.5rem 0.75rem;
       background: #fffcf0; border-top: 1px solid #f0e8c0;
-      font-size: 0.64rem;
+      font-size: 0.66rem;
     }
     .hc-copilot-icon { color: var(--teal); flex-shrink: 0; }
     .hc-copilot-label { font-weight: 700; color: var(--teal); white-space: nowrap; }
@@ -1557,6 +1656,28 @@
     .hc-reveal.hc-visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Conversation slide system */
+    .hc-messages {
+      position: relative;
+    }
+    .hc-conv-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.46rem;
+      padding: 0.72rem 0.75rem;
+      transform: translateY(108%);
+      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .hc-conv-slide.slide-active {
+      transform: translateY(0);
+    }
+    .hc-conv-slide.slide-exit {
+      transform: translateY(-115%);
     }
 
     /* ── RESPONSIVE ──────────────────────────────── */
@@ -1602,35 +1723,36 @@
       <img src="brand_assets/Back Chattie - Full Mark.png" alt="Chattie">
     </a>
     <ul class="nav-links">
-      <li><a href="#como-funciona">Como funciona</a></li>
-      <li><a href="#pricing">Preços</a></li>
+      <li><a href="#como-funciona">How it works</a></li>
+      <li><a href="#pricing">Pricing</a></li>
     </ul>
     <div class="nav-actions">
       <a href="#" class="nav-login">Login</a>
-      <a href="#" class="btn btn-orange">Começar agora</a>
+      <a href="#" class="btn btn-orange">Get started</a>
     </div>
   </div>
 </nav>
 
 <!-- ── HERO ─────────────────────────────────────── -->
 <div class="hero-wrapper">
+<div class="grain-overlay"></div>
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge">
       <span class="star-deco">✦</span> Para founders B2B que vendem pelo LinkedIn
     </div>
     <h1 class="hero-headline">
-      Automação envia mensagens.<br>
-      O Chattie <em>conversa.</em>
+      Automações apenas enviam mensagens.<br>
+      O Chattie, <em>conversa.</em>
     </h1>
     <p class="hero-sub">
       Você perde prospects qualificados porque demora para responder. O Chattie cuida dos follow-ups, conduz conversas e agenda reuniões — automaticamente. Pipeline previsível em 30 dias, sem contratar mais ninguém.
     </p>
     <div class="hero-cta">
-      <a href="#" class="btn btn-brand" style="font-size:1rem; padding: 0.8rem 2rem;">Começar agora →</a>
-      <a href="#como-funciona" class="btn btn-outline" style="font-size:1rem; padding: 0.8rem 1.75rem; border-width: 2px;">↓ Ver como funciona</a>
+      <a href="#" class="btn btn-brand" style="font-size:0.95rem; padding: 0.7rem 1.75rem;">Começar agora →</a>
+      <a href="#como-funciona" class="btn btn-outline" style="font-size:0.95rem; padding: 0.7rem 1.5rem; border-width: 2px;">↓ Ver como funciona</a>
     </div>
-    <p class="hero-trust">Sem cartão · Cancele quando quiser · Suporte em português</p>
+    <p class="hero-trust">Cancele quando quiser · Suporte em português</p>
     <div class="hero-social-proof">
       <span class="hero-social-proof-dot"></span>
       <span><strong>+47 founders B2B</strong> já prospectam com o Chattie.</span>
@@ -1643,7 +1765,7 @@
         <span class="hc-dot" style="background:#ff5f57"></span>
         <span class="hc-dot" style="background:#febc2e"></span>
         <span class="hc-dot" style="background:#28c840"></span>
-        <span class="hc-url">app.chattie.com.br — Inbox</span>
+        <span class="hc-url">app.trychattie.com</span>
       </div>
       <!-- 3-panel body: nav | list | chat -->
       <div class="hc-body">
@@ -1655,49 +1777,62 @@
           </div>
           <div class="hc-nav-wizard">✦ Setup Wizard</div>
           <div class="hc-nav-section">OUTREACH</div>
-          <div class="hc-nav-item">📢 Campaigns</div>
-          <div class="hc-nav-item hc-nav-item-active">📥 Inbox</div>
-          <div class="hc-nav-item">👤 Leads</div>
-          <div class="hc-nav-section">CONFIGURAÇÃO</div>
-          <div class="hc-nav-item">🎁 Offerings</div>
-          <div class="hc-nav-item">💬 Prompts</div>
-          <div class="hc-nav-item">💼 LinkedIn</div>
-          <div class="hc-nav-section">CONTA</div>
-          <div class="hc-nav-item">👤 Perfil</div>
-          <div class="hc-nav-item">🧪 Sandbox</div>
-          <div class="hc-nav-credits">⊙ créditos</div>
+          <div class="hc-nav-item">✦ Campaigns</div>
+          <div class="hc-nav-item hc-nav-item-active">✦ Inbox</div>
+          <div class="hc-nav-item">✦ Leads</div>
+          <div class="hc-nav-section">SETTINGS</div>
+          <div class="hc-nav-item">✦ Offerings</div>
+          <div class="hc-nav-item">✦ Prompts</div>
+          <div class="hc-nav-item">✦ LinkedIn</div>
+          <div class="hc-nav-section">ACCOUNT</div>
+          <div class="hc-nav-item">✦ Profile</div>
+          <div class="hc-nav-item">✦ Sandbox</div>
+          <div class="hc-nav-credits">⊙ credits</div>
         </div>
 
         <!-- ② Conversation list -->
         <div class="hc-list">
           <div class="hc-search-row">
-            <div class="hc-search-input">🔍 Buscar conversas...</div>
+            <div class="hc-search-input">✦ Search conversations...</div>
             <span class="hc-refresh-icon">↻</span>
           </div>
           <div class="hc-tabs">
-            <button class="hc-tab hc-tab-active">Todas <span class="hc-tab-badge">2</span></button>
-            <button class="hc-tab">Ativas <span class="hc-tab-badge" style="background:#bbb;">1</span></button>
+            <button class="hc-tab hc-tab-active">All <span class="hc-tab-badge">3</span></button>
+            <button class="hc-tab">Active <span class="hc-tab-badge" style="background:#bbb;">2</span></button>
           </div>
           <!-- Contact 1 — active/selected -->
-          <div class="hc-list-contact hc-list-contact-active">
-            <div class="hc-avatar hc-avatar-teal">BH</div>
+          <div class="hc-list-contact hc-list-contact-active" id="hcl-1">
+            <div class="hc-avatar hc-avatar-teal">CM</div>
             <div class="hc-list-info">
-              <div class="hc-list-name">Brenno Hoffmann</div>
-              <div class="hc-list-preview">não percebi, pq você...</div>
-              <div class="hc-list-campaign">TRA - Outreach</div>
+              <div class="hc-list-name">Carlos Medina</div>
+              <div class="hc-list-preview">isso é bot né hahaha</div>
+              <div class="hc-list-campaign">Q1 Outreach</div>
             </div>
             <div class="hc-list-meta">
-              <span class="hc-list-time">1d</span>
+              <span class="hc-list-time">2h</span>
               <span class="hc-list-unread">0</span>
             </div>
           </div>
           <!-- Contact 2 -->
-          <div class="hc-list-contact">
-            <div class="hc-avatar hc-avatar-gray">TL</div>
+          <div class="hc-list-contact" id="hcl-2">
+            <div class="hc-avatar hc-avatar-gray">MC</div>
             <div class="hc-list-info">
-              <div class="hc-list-name" style="color:#999">Thiago Lisboa</div>
-              <div class="hc-list-preview" style="color:#ccc">Oi Thiago! Vi que você...</div>
-              <div class="hc-list-campaign">TRA - Outreach</div>
+              <div class="hc-list-name">Mariana Costa</div>
+              <div class="hc-list-preview">87k? Sério?</div>
+              <div class="hc-list-campaign">Q1 Outreach</div>
+            </div>
+            <div class="hc-list-meta">
+              <span class="hc-list-time">4h</span>
+              <span class="hc-list-unread">1</span>
+            </div>
+          </div>
+          <!-- Contact 3 -->
+          <div class="hc-list-contact" id="hcl-3">
+            <div class="hc-avatar" style="background:rgba(244,177,63,0.2);color:#b87800;">RB</div>
+            <div class="hc-list-info">
+              <div class="hc-list-name">Ricardo Barros</div>
+              <div class="hc-list-preview">achei que era concorrência</div>
+              <div class="hc-list-campaign">Q1 Outreach</div>
             </div>
             <div class="hc-list-meta">
               <span class="hc-list-time">1d</span>
@@ -1708,35 +1843,84 @@
 
         <!-- ③ Chat conversation -->
         <div class="hc-conv">
-          <div class="hc-conv-header">
-            <div class="hc-avatar hc-avatar-teal hc-avatar-sm">BH</div>
+          <div class="hc-conv-header" id="hc-header">
+            <div class="hc-avatar hc-avatar-teal hc-avatar-sm" id="hc-header-avatar">CM</div>
             <div>
-              <div class="hc-conv-name">Brenno Hoffmann</div>
-              <div class="hc-conv-meta">TRA - Outreach</div>
+              <div class="hc-conv-name" id="hc-header-name">Carlos Medina</div>
+              <div class="hc-conv-meta" id="hc-header-meta">Q1 Outreach · CEO</div>
             </div>
             <div class="hc-ai-badge">✦ AI SDR</div>
           </div>
-          <div class="hc-messages">
-            <div class="hc-msg hc-msg-out hc-reveal" id="hcm1">
-              O gargalo é sempre o mesmo: o fundador vira refém do processo comercial.
-              <div class="hc-msg-time">IA · 21:43</div>
+          <div class="hc-messages" id="hc-messages-wrap">
+
+            <!-- CONV 1: Carlos Medina — acha que é bot -->
+            <div class="hc-conv-slide slide-active" id="hc-conv-1">
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Oi Carlos! Vi que a Nexora tá contratando bastante. Vocês prospectam pelo LinkedIn?
+                <div class="hc-msg-time">AI · 10:02</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                Cara, isso é bot né hahaha
+                <div class="hc-msg-time">10:04</div>
+              </div>
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Kkk não... mas reparou que citei a Nexora? Não é template não
+                <div class="hc-msg-time">AI · 10:06</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                Ok, você me pegou. Que parada é essa?
+                <div class="hc-msg-time">10:08</div>
+              </div>
+              <div class="hc-typing hc-reveal"><span></span><span></span><span></span></div>
             </div>
-            <div class="hc-msg hc-msg-in hc-reveal" id="hcm2">
-              você é um robo né? me parece muito um bot
-              <div class="hc-msg-time">21:47</div>
+
+            <!-- CONV 2: Mariana Costa — cética com ROI -->
+            <div class="hc-conv-slide" id="hc-conv-2">
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Oi Mariana! Vi que vc lidera growth na Vortex. Como tá o pipeline via LinkedIn?
+                <div class="hc-msg-time">AI · 11:30</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                Mais uma ferramenta... honestamente não tô vendo ROI nisso não
+                <div class="hc-msg-time">11:32</div>
+              </div>
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Faz sentido. Um cliente fechou 87k em 45 dias com o mesmo ICP que vc tem. Posso mostrar?
+                <div class="hc-msg-time">AI · 11:33</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                87k? Sério? Que segmento era?
+                <div class="hc-msg-time">11:35</div>
+              </div>
+              <div class="hc-typing hc-reveal"><span></span><span></span><span></span></div>
             </div>
-            <div class="hc-msg hc-msg-out hc-reveal" id="hcm3">
-              Não, sou eu mesmo! Trabalho com tech B2B para automatizar sem depender só do fundador.
-              <div class="hc-msg-time">IA · 21:49</div>
+
+            <!-- CONV 3: Ricardo Barros — já tem SDR -->
+            <div class="hc-conv-slide" id="hc-conv-3">
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Oi Ricardo! Vi que vc tem time de vendas. Como tá o volume de DMs pelo LinkedIn?
+                <div class="hc-msg-time">AI · 09:15</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                Já tenho SDR interno, valeu
+                <div class="hc-msg-time">09:17</div>
+              </div>
+              <div class="hc-msg hc-msg-out hc-reveal">
+                Boa! O Chattie trabalha junto com o SDR de vc, cobre madrugada e fds automaticamente
+                <div class="hc-msg-time">AI · 09:18</div>
+              </div>
+              <div class="hc-msg hc-msg-in hc-reveal">
+                Perae... funciona junto com ele? Achei que era concorrência
+                <div class="hc-msg-time">09:21</div>
+              </div>
+              <div class="hc-typing hc-reveal"><span></span><span></span><span></span></div>
             </div>
-            <div class="hc-typing hc-reveal" id="hcm4">
-              <span></span><span></span><span></span>
-            </div>
+
           </div>
-          <div class="hc-copilot">
+          <div class="hc-copilot" id="hc-copilot-bar">
             <svg class="hc-copilot-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2.17" y1="2.17" x2="9.83" y2="9.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="9.83" y1="2.17" x2="2.17" y2="9.83" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span class="hc-copilot-label">Copilot sugere:</span>
-            <span class="hc-copilot-text">Confirmar call — quinta 15h →</span>
+            <span class="hc-copilot-label">Copilot suggests:</span>
+            <span class="hc-copilot-text" id="hc-copilot-text">Propor uma demo de 20 min essa semana →</span>
           </div>
         </div>
 
@@ -1771,22 +1955,22 @@
 
   <div class="problem-grid">
     <div class="pain-card reveal reveal-d1" style="background: var(--lavender);">
-      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="16" y1="3" x2="16" y2="29" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="16" x2="29" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="6.51" y1="6.51" x2="25.49" y2="25.49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="25.49" y1="6.51" x2="6.51" y2="25.49" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+      <div class="pain-card-icon" style="font-size:2rem;line-height:1;font-weight:900;color:var(--black);">✦</div>
       <div class="pain-card-title">A conversa ia bem — e você sumiu.</div>
       <p class="pain-card-body">O prospect estava pronto. O follow-up atrasou 3 dias. Ele fechou com quem respondeu primeiro. Não por falta de interesse. Por falta de presença.</p>
     </div>
     <div class="pain-card reveal reveal-d2" style="background: var(--cyan);">
-      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="7.51" y1="7.51" x2="24.49" y2="24.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/><line x1="24.49" y1="7.51" x2="7.51" y2="24.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/></svg></div>
+      <div class="pain-card-icon" style="font-size:2rem;line-height:1;font-weight:900;color:var(--black);">✺</div>
       <div class="pain-card-title">40 DMs abertas. Nenhuma organizada.</div>
       <p class="pain-card-body">Quais estão quentes? Quais já esfriaram? Quais morreram em silêncio? Você não sabe. Então não segue nenhuma direito.</p>
     </div>
     <div class="pain-card reveal reveal-d3" style="background: var(--white);">
-      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="24" height="24" rx="3" stroke="currentColor" stroke-width="2.5"/><line x1="16" y1="4" x2="16" y2="28" stroke="currentColor" stroke-width="2.5"/><line x1="4" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="2.5"/></svg></div>
+      <div class="pain-card-icon" style="font-size:2rem;line-height:1;font-weight:900;color:var(--teal);">✧</div>
       <div class="pain-card-title">Você já ouviu "isso é automação, né?"</div>
       <p class="pain-card-body">Mensagem genérica enviada. Silêncio total — ou pior: o prospect percebe e sua credibilidade vai junto.</p>
     </div>
     <div class="pain-card reveal reveal-d4" style="background: var(--orange);">
-      <div class="pain-card-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 5 L27 11 L27 21 L16 27 L5 21 L5 11 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="16" y1="5" x2="16" y2="27" stroke="currentColor" stroke-width="2"/><line x1="5" y1="11" x2="27" y2="21" stroke="currentColor" stroke-width="2"/><line x1="27" y1="11" x2="5" y2="21" stroke="currentColor" stroke-width="2"/></svg></div>
+      <div class="pain-card-icon" style="font-size:2rem;line-height:1;font-weight:900;color:var(--black);">✹</div>
       <div class="pain-card-title">Quando você para, o pipeline para.</div>
       <p class="pain-card-body">Sua aquisição depende da sua agenda. É um ciclo que não escala — e você já sabe disso.</p>
     </div>
@@ -1807,7 +1991,7 @@
   <div class="how-inner">
     <div class="section-header reveal">
       <p class="section-eyebrow">Como funciona</p>
-      <h2 class="section-headline">Configure hoje. Pipeline amanhã.</h2>
+      <h2 class="section-headline">Setup em 10 minutos. Pipeline ainda hoje.</h2>
       <p class="section-sub">Três passos. Sem treinamento. Sem semanas de setup.</p>
     </div>
     <div class="how-steps">
@@ -1894,56 +2078,63 @@
 <!-- ── SANDBOX ────────────────────────────────────── -->
 <div class="sandbox-wrapper" id="sandbox">
 <section class="sandbox-section">
-  <div class="sandbox-unique-badge">✦ Único no Brasil</div>
-  <p class="section-eyebrow">O diferencial incontestável</p>
-  <h2 class="section-headline">
-    O único Sandbox de mensagens para LinkedIn do Brasil.
-  </h2>
-  <p class="section-sub">Nasceu porque precisávamos testar mensagens antes de disparar para 500 prospects. Nenhuma ferramenta permitia isso. Então construímos.</p>
-  <p class="reveal" style="font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.6); margin-top: 0.75rem; font-style: italic;">Verificamos todos os players do mercado BR. Nenhum outro permite simular a conversa completa antes de disparar.</p>
+  <!-- Two-column layout: left = text / right = screenshot + boxes -->
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
 
-  <!-- Sandbox screenshot -->
-  <div class="reveal" style="margin: 2.5rem 0; border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(0,0,0,0.35);">
-    <div style="background: rgba(0,0,0,0.4); padding: 0.65rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-      <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
-      <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
-      <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
-      <span style="margin-left:0.5rem;font-size:0.72rem;color:rgba(255,255,255,0.4);font-family:monospace;">app.chattie.com.br/sandbox</span>
-    </div>
-    <div style="overflow:hidden; height: 400px; position:relative;">
-      <img src="brand_assets/chattie-v2-sandbox.jpeg" alt="Sandbox do Chattie em uso" style="width:100%; height:auto; display:block; position:absolute; top:0; left:0;">
-    </div>
-  </div>
+    <!-- LEFT: header + story + CTA -->
+    <div class="reveal">
+      <div class="sandbox-unique-badge" style="margin-bottom:1rem;">✦ Único no Brasil</div>
+      <p class="section-eyebrow">O diferencial incontestável</p>
+      <h2 class="section-headline" style="margin-bottom:1rem;">O único Sandbox de mensagens para LinkedIn do Brasil.</h2>
+      <p class="section-sub" style="margin-bottom:1rem;">Nasceu porque precisávamos testar mensagens antes de disparar para 500 prospects. Nenhuma ferramenta permitia isso. Então construímos.</p>
+      <p style="font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.55); margin-bottom:1.75rem; font-style: italic;">Verificamos todos os players do mercado BR. Nenhum outro permite simular a conversa completa antes de disparar.</p>
 
-  <div class="sandbox-body">
-    <div class="sandbox-story reveal">
-      <p>A TRA roda campanhas de Social Selling para dezenas de clientes B2B. Cada cliente tem produto diferente, ICP diferente, tom diferente.</p>
-      <p>O problema: antes de disparar qualquer campanha, precisávamos testar as mensagens — e <em>nenhuma ferramenta permitia isso</em>. Você configurava, disparava, e só descobria se funcionou quando o prospect respondia (ou não respondia).</p>
-      <p>Então construímos o Sandbox. <em>Para nós mesmos, primeiro.</em></p>
-      <p>Quando vimos que era o único do mercado no Brasil, adicionamos ao Chattie.</p>
-    </div>
-    <div class="sandbox-right">
-      <div class="sandbox-how reveal reveal-d1">
-        <div class="sandbox-how-title">Como funciona na prática</div>
-        <p>Escolha uma oferta → selecione um lead real → simule a conversa completa. Veja o que a IA diz, como ela responde a objeções, quando propõe o próximo passo. Não ficou bom? Ajuste o prompt e teste de novo. Sem consequência. Ficou perfeito? Ativa a campanha.</p>
+      <div class="sandbox-story" style="margin-bottom:2rem;">
+        <p>A TRA roda campanhas de Social Selling para dezenas de clientes B2B. Cada cliente tem produto diferente, ICP diferente, tom diferente.</p>
+        <p>O problema: antes de disparar qualquer campanha, precisávamos testar as mensagens — e <em>nenhuma ferramenta permitia isso</em>. Você configurava, disparava, e só descobria se funcionou quando o prospect respondia (ou não respondia).</p>
+        <p>Então construímos o Sandbox. <em>Para nós mesmos, primeiro.</em> Quando vimos que era o único do mercado no Brasil, adicionamos ao Chattie.</p>
       </div>
+
+      <a href="#pricing" class="btn btn-orange" style="font-size:1rem; padding:0.8rem 2.25rem; border-color: var(--black);">Assine agora →</a>
+    </div>
+
+    <!-- RIGHT: screenshot + how it works + eliminates -->
+    <div style="display:flex; flex-direction:column; gap:1.25rem;">
+
+      <!-- Screenshot -->
+      <div class="reveal" style="border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(0,0,0,0.35);">
+        <div style="background: rgba(0,0,0,0.4); padding: 0.55rem 0.9rem; display: flex; align-items: center; gap: 0.45rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <span style="width:9px;height:9px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+          <span style="margin-left:0.4rem;font-size:0.68rem;color:rgba(255,255,255,0.4);font-family:monospace;">app.chattie.com.br/sandbox</span>
+        </div>
+        <div style="overflow:hidden; height: 260px; position:relative;">
+          <img src="brand_assets/chattie-v2-sandbox.jpeg" alt="Sandbox do Chattie em uso" style="width:100%; height:100%; display:block; object-fit:cover; position:absolute; top:0; left:0;">
+        </div>
+      </div>
+
+      <!-- How it works box -->
+      <div class="sandbox-how reveal reveal-d1">
+        <div class="sandbox-how-title">✦ Como funciona na prática</div>
+        <p>Escolha uma oferta → selecione um lead real → simule a conversa completa. Veja o que a IA diz, como ela responde a objeções, quando propõe o próximo passo. Ajuste o prompt. Aprovou? Ativa a campanha.</p>
+      </div>
+
+      <!-- Eliminates box -->
       <div class="sandbox-eliminates reveal reveal-d2">
-        <div class="sandbox-eliminates-title">Sem Sandbox vs. Com Sandbox:</div>
-        <div style="background: rgba(229,123,51,0.15); border: 1px solid rgba(229,123,51,0.3); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; color: rgba(255,255,255,0.85);">
+        <div class="sandbox-eliminates-title">✺ Sem Sandbox vs. Com Sandbox:</div>
+        <div style="background: rgba(229,123,51,0.15); border: 1px solid rgba(229,123,51,0.3); border-radius: var(--radius); padding: 0.85rem 1.1rem; margin-bottom: 0.85rem; font-size: 0.85rem; line-height: 1.6; color: rgba(255,255,255,0.85);">
           <strong style="color: var(--orange);">Sem Sandbox:</strong> você descobre que a mensagem soou errada depois que o lead sumiu.<br>
-          <strong style="color: var(--sage);">Com Sandbox:</strong> você ajusta antes de disparar. Sem consequência. Sem perder o lead.
+          <strong style="color: var(--sage);">Com Sandbox:</strong> você ajusta antes de disparar. Sem consequência.
         </div>
         <ul class="sandbox-elim-list">
-          <li><span class="elim-icon">🎯</span> O risco de queimar reputação com mensagem errada</li>
-          <li><span class="elim-icon">⚙️</span> O cheiro de automação que afasta prospects qualificados</li>
-          <li><span class="elim-icon">✅</span> A ansiedade de não saber o que a IA está dizendo em seu nome</li>
+          <li><span class="elim-icon" style="color:var(--orange);font-size:1.1rem;font-weight:900;">✦</span> Risco de queimar reputação com mensagem errada</li>
+          <li><span class="elim-icon" style="color:var(--orange);font-size:1.1rem;font-weight:900;">✧</span> O cheiro de automação que afasta prospects</li>
+          <li><span class="elim-icon" style="color:var(--orange);font-size:1.1rem;font-weight:900;">✺</span> A ansiedade de não saber o que a IA diz em seu nome</li>
         </ul>
       </div>
-    </div>
-  </div>
 
-  <div style="text-align:center; margin-top: 2.5rem;">
-    <a href="#pricing" class="btn btn-orange" style="font-size:1rem; padding:0.8rem 2.25rem; border-color: var(--black);">Assine agora!</a>
+    </div>
   </div>
 </section>
 </div>
@@ -1951,31 +2142,31 @@
 <!-- ── TICKER ────────────────────────────────────── -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span class="ticker-item"><span class="ticker-icon">🤖</span> AI SDR conversacional</span>
-    <span class="ticker-item"><span class="ticker-icon">🧪</span> Sandbox de mensagens</span>
-    <span class="ticker-item"><span class="ticker-icon">✈️</span> Autopilot</span>
-    <span class="ticker-item"><span class="ticker-icon">🎮</span> Copilot</span>
-    <span class="ticker-item"><span class="ticker-icon">📥</span> Inbox unificada</span>
-    <span class="ticker-item"><span class="ticker-icon">🔄</span> Follow-up inteligente</span>
-    <span class="ticker-item"><span class="ticker-icon">📊</span> Campaigns Manager</span>
-    <span class="ticker-item"><span class="ticker-icon">👥</span> Leads Manager</span>
-    <span class="ticker-item"><span class="ticker-icon">⚡</span> Setup Wizard IA</span>
-    <span class="ticker-item"><span class="ticker-icon">🎯</span> Prompts customizáveis</span>
-    <span class="ticker-item"><span class="ticker-icon">🇧🇷</span> Suporte em português</span>
-    <span class="ticker-item"><span class="ticker-icon">📌</span> LinkedIn nativo</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✦</span> AI SDR conversacional</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✺</span> Sandbox de mensagens</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✧</span> Autopilot</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✹</span> Copilot</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✦</span> Inbox unificada</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✺</span> Follow-up inteligente</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✧</span> Campaigns Manager</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✹</span> Leads Manager</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✦</span> Setup Wizard IA</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✺</span> Prompts customizáveis</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✧</span> Suporte em português</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✹</span> LinkedIn nativo</span>
     <!-- Duplicate for seamless loop -->
-    <span class="ticker-item"><span class="ticker-icon">🤖</span> AI SDR conversacional</span>
-    <span class="ticker-item"><span class="ticker-icon">🧪</span> Sandbox de mensagens</span>
-    <span class="ticker-item"><span class="ticker-icon">✈️</span> Autopilot</span>
-    <span class="ticker-item"><span class="ticker-icon">🎮</span> Copilot</span>
-    <span class="ticker-item"><span class="ticker-icon">📥</span> Inbox unificada</span>
-    <span class="ticker-item"><span class="ticker-icon">🔄</span> Follow-up inteligente</span>
-    <span class="ticker-item"><span class="ticker-icon">📊</span> Campaigns Manager</span>
-    <span class="ticker-item"><span class="ticker-icon">👥</span> Leads Manager</span>
-    <span class="ticker-item"><span class="ticker-icon">⚡</span> Setup Wizard IA</span>
-    <span class="ticker-item"><span class="ticker-icon">🎯</span> Prompts customizáveis</span>
-    <span class="ticker-item"><span class="ticker-icon">🇧🇷</span> Suporte em português</span>
-    <span class="ticker-item"><span class="ticker-icon">📌</span> LinkedIn nativo</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✦</span> AI SDR conversacional</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✺</span> Sandbox de mensagens</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✧</span> Autopilot</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✹</span> Copilot</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✦</span> Inbox unificada</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✺</span> Follow-up inteligente</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✧</span> Campaigns Manager</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✹</span> Leads Manager</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✦</span> Setup Wizard IA</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--rust);">✺</span> Prompts customizáveis</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--teal);">✧</span> Suporte em português</span>
+    <span class="ticker-item"><span class="ticker-icon" style="color:var(--orange);">✹</span> LinkedIn nativo</span>
   </div>
 </div>
 
@@ -2024,13 +2215,13 @@
         <li><span class="icon-good">✓</span> Construído pela TRA, validado na operação real</li>
         <li><span class="icon-good">✓</span> Suporte nativo em português</li>
       </ul>
-      <div class="diff-card-price" style="color: var(--orange);">R$ 397/mês — menos que a metade</div>
+      <div class="diff-card-price" style="color: var(--orange);">R$ 397/mês por sender conectado</div>
       <a href="#" class="btn btn-orange price-cta-btn" style="border-color: var(--black);">Começar agora →</a>
     </div>
   </div>
 
   <div class="diff-remate reveal">
-    "Automação envia mensagens. O Chattie conversa."
+    "Automações apenas enviam mensagens. O Chattie, conversa."
   </div>
 </section>
 </div>
@@ -2042,27 +2233,33 @@
     <div class="operators-context reveal">
       <p class="section-eyebrow" style="margin-bottom:0.75rem;">Quem está por trás</p>
       <h2 class="section-headline" style="margin-bottom:0.75rem;">Nasceu na operação.<br>Não no PowerPoint.</h2>
-      <p class="section-sub" style="margin-bottom:1.75rem;">O Chattie foi construído dentro da TRA — e isso muda tudo.</p>
-      <p>O founder por trás do Chattie opera Social Selling B2B no LinkedIn todos os dias — dentro da TRA (The Revenue Architects), agência que roda campanhas reais para dezenas de clientes.</p>
-      <p><strong>A tensão:</strong> "Toda ferramenta que testamos disparava mensagens. Nenhuma sabia continuar uma conversa. Configurávamos, disparávamos — e só descobríamos se funcionou quando o prospect respondia. Ou não respondia."</p>
-      <p><strong>A resolução:</strong> Então construímos o Chattie para resolver o problema que tínhamos. E descobrimos que todo founder B2B tinha o mesmo.</p>
-      <p>Cada feature foi <strong>sentida antes de ser especificada</strong>. Cada prompt foi testado em prospect real antes de virar código.</p>
+
+      <!-- TRA logo + tagline -->
+      <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; background:var(--white); border:var(--border-card); border-radius:var(--radius); box-shadow:var(--shadow); padding:0.85rem 1.25rem; width:fit-content;">
+        <img src="brand_assets/tra-logo.png" alt="TRA — Technology for Revenue Acquisition" style="height:32px; width:auto; display:block;">
+        <span style="font-size:0.78rem; font-weight:700; color:#444; letter-spacing:0.02em;">O primeiro e único AI-GTM Studio do Brasil</span>
+      </div>
+
+      <p class="section-sub" style="margin-bottom:1.25rem;">O Chattie foi criado pelos fundadores da <strong>TRA — Technology for Revenue Acquisition</strong>, o primeiro e único AI-GTM Studio do Brasil. E isso muda tudo.</p>
+      <p>Os fundadores da TRA operam Social Selling B2B no LinkedIn todos os dias — rodando campanhas reais para dezenas de clientes B2B. Não é teoria: é pipeline.</p>
+      <p>"Toda ferramenta que testamos disparava mensagens. Nenhuma sabia continuar uma conversa. Configurávamos, disparávamos — e só descobríamos se funcionou quando o prospect respondia. Ou não respondia."</p>
+      <p>Então construímos o Chattie para resolver o problema que tínhamos. E descobrimos que todo founder B2B tinha o mesmo. Cada feature foi <strong>sentida antes de ser especificada</strong>. Cada prompt foi testado em prospect real antes de virar código.</p>
     </div>
     <div class="operators-bullets">
       <div class="op-bullet reveal reveal-d1">
-        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="14" y1="2" x2="14" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="2" y1="14" x2="26" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="5.44" y1="5.44" x2="22.56" y2="22.56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="22.56" y1="5.44" x2="5.44" y2="22.56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="op-bullet-icon" style="font-size:1.75rem;line-height:1;color:var(--rust);">✦</div>
         <div class="op-bullet-title">O Sandbox nasceu de um problema real</div>
         <p class="op-bullet-body">A TRA precisava testar mensagens antes de disparar para 500 prospects de clientes. Nenhuma ferramenta permitia isso. Então construímos — e descobrimos que era o único do mercado brasileiro.</p>
         <div class="op-bullet-cta">→ Sentida antes de especificada. Essa é a diferença.</div>
       </div>
       <div class="op-bullet reveal reveal-d2">
-        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="2.5"/><line x1="14" y1="3" x2="14" y2="25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="3" y1="14" x2="25" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        <div class="op-bullet-icon" style="font-size:1.75rem;line-height:1;color:var(--rust);">✺</div>
         <div class="op-bullet-title">Feedback loop diário com a operação</div>
         <p class="op-bullet-body">50+ campanhas rodadas. Mais de 10.000 mensagens testadas no Sandbox antes de virar feature. Qualquer mudança no algoritmo do LinkedIn chega primeiro para a TRA — o Chattie se atualiza em dias, não em trimestres.</p>
       </div>
       <div class="op-bullet reveal reveal-d3">
-        <div class="op-bullet-icon brand-icon brand-icon-md"><svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="22" height="22" rx="3" stroke="currentColor" stroke-width="2.5"/><line x1="14" y1="3" x2="14" y2="25" stroke="currentColor" stroke-width="2.5"/><line x1="3" y1="14" x2="25" y2="14" stroke="currentColor" stroke-width="2.5"/></svg></div>
-        <div class="op-bullet-title">Agência + SaaS: nenhum concorrente tem os dois</div>
+        <div class="op-bullet-icon" style="font-size:1.75rem;line-height:1;color:var(--rust);">✧</div>
+        <div class="op-bullet-title">AI-GTM Studio + SaaS: nenhum concorrente tem os dois</div>
         <p class="op-bullet-body">Quem só faz software nunca operou uma campanha. Quem só faz agência não escala. A TRA tem os dois — e o Chattie é o produto que prova isso.</p>
       </div>
     </div>
@@ -2183,7 +2380,7 @@
 
   <div style="text-align: center; margin-top: 3rem;" class="reveal">
     <p style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--black);">Parece que é para você?</p>
-    <a href="#pricing" class="btn btn-brand" style="font-size: 1rem; padding: 0.8rem 2rem;">Começar grátis →</a>
+    <a href="#pricing" class="btn btn-brand" style="font-size: 1rem; padding: 0.8rem 2rem;">Começar agora →</a>
   </div>
 </section>
 
@@ -2192,20 +2389,20 @@
 <section class="pricing-section">
   <div class="pricing-header section-header reveal">
     <p class="section-eyebrow">Preços</p>
-    <h2 class="section-headline">Comece grátis. Escale quando fizer sentido.</h2>
-    <p class="section-sub" style="margin: 0 auto;">14 dias grátis no plano Solo. Sem cartão de crédito.</p>
+    <h2 class="section-headline">Planos para cada fase do seu crescimento.</h2>
+    <p class="section-sub" style="margin: 0 auto;">Escolha o plano ideal para a sua operação. Cancele quando quiser.</p>
   </div>
 
   <div class="pricing-anchor-wrap reveal">
     <div class="pricing-anchor">
-      Ferramentas similares cobram <strong>R$ 697+/mês</strong>. O Solo começa em <strong>R$ 397</strong> — com mais inteligência de conversa.
+      O Solo começa em <strong>R$ 397/mês</strong> — menos de 10% do custo de um SDR tradicional (R$ 3.500+/mês).
     </div>
   </div>
 
   <div class="pricing-toggle reveal">
     <button class="toggle-btn active" data-period="monthly" onclick="setPeriod('monthly')">Mensal</button>
     <button class="toggle-btn" data-period="semestral" onclick="setPeriod('semestral')">Semestral — economize 10%</button>
-    <button class="toggle-btn" data-period="anual" onclick="setPeriod('anual')">Anual — economize 25%</button>
+    <button class="toggle-btn" data-period="anual" onclick="setPeriod('anual')">Anual — economize 20%</button>
   </div>
 
   <div class="pricing-grid">
@@ -2217,7 +2414,7 @@
         <div class="price-amount" id="pro-price">R$ 397</div>
         <div class="price-period">/mês</div>
       </div>
-      <p class="price-vencefy-anchor">Ferramentas similares cobram R$ 697. Você paga R$ 397.</p>
+      <p class="price-vencefy-anchor">Menos de 10% do custo de um SDR tradicional — com mais resultado.</p>
       <p class="price-sub">Para founders que prospectam solo e querem pipeline previsível sem contratar SDR.</p>
       <p class="price-scope">1 licença LinkedIn · Até 3 campanhas ativas</p>
       <hr class="price-divider">
@@ -2233,7 +2430,7 @@
         <li><span class="chk">✓</span> Suporte em português</li>
       </ul>
       <a href="#" class="btn btn-brand price-cta-btn" style="border-color: var(--black);">Assinar agora →</a>
-      <p class="price-trust">14 dias grátis · Sem cartão de crédito · Cancele quando quiser</p>
+      <p class="price-trust">Assine agora · Sem cartão de crédito · Cancele quando quiser</p>
       <p class="price-micro">Configuração em 10 minutos. Primeira campanha sai hoje.</p>
     </div>
 
@@ -2241,9 +2438,9 @@
     <div class="price-card featured reveal reveal-d2">
       <div class="price-card-badge">★ MAIS POPULAR</div>
       <div class="price-card-name">Growth</div>
-      <div>
-        <div class="price-amount" id="growth-price">R$ 997</div>
-        <div class="price-period">/mês</div>
+      <div class="price-consult-block">
+        <div class="price-amount price-consult" id="growth-price">Consultar</div>
+        <div class="price-period">preço sob consulta</div>
       </div>
       <p class="price-sub">Para agências e consultores que operam múltiplas contas e precisam de escala real.</p>
       <p class="price-scope">3 licenças LinkedIn · Campanhas ilimitadas</p>
@@ -2262,9 +2459,9 @@
     <!-- SCALE -->
     <div class="price-card reveal reveal-d3">
       <div class="price-card-name">Scale</div>
-      <div>
-        <div class="price-amount">R$ 1.997</div>
-        <div class="price-period">/mês</div>
+      <div class="price-consult-block">
+        <div class="price-amount price-consult">Consultar</div>
+        <div class="price-period">preço sob consulta</div>
       </div>
       <p class="price-sub">Para operações com volume alto, licenças múltiplas e Account Manager dedicado.</p>
       <p class="price-scope">Licenças customizadas</p>
@@ -2278,7 +2475,8 @@
         <li><span class="chk">✓</span> SLA garantido</li>
         <li><span class="chk">✓</span> Condições personalizadas</li>
       </ul>
-      <a href="#" class="btn btn-dark price-cta-btn" style="border-color: var(--black);">Agendar conversa →</a>
+      <a href="#" class="btn btn-dark price-cta-btn" style="border-color: var(--black);">Falar com o time →</a>
+      <p class="price-trust">Preço personalizado · Fale com nossa equipe</p>
     </div>
 
   </div>
@@ -2287,7 +2485,7 @@
     <span>SSL · Pagamento seguro</span>
     <span>Suporte em português</span>
     <span>Cancele quando quiser</span>
-    <span>14 dias grátis no Solo</span>
+    <span>Contrato mensal, semestral ou anual</span>
   </div>
   <p class="pricing-footer reveal">
     Todos os planos incluem: AI SDR conversacional · Sandbox de mensagens · Prompts customizáveis · Suporte em português
@@ -2332,11 +2530,11 @@
     </div>
     <div class="faq-item">
       <button class="faq-question" onclick="toggleFaq(this)">
-        O que acontece depois do trial de 14 dias?
+        Posso cancelar quando quiser?
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        Você decide se quer continuar. Sem cobrança automática surpresa. Se quiser assinar, escolhe o plano que faz sentido para sua operação. Se não quiser, sua conta simplesmente encerra — sem burocracia.
+        Sim. Você decide quando quiser parar. Sem cobrança automática surpresa, sem multa, sem burocracia. Se não quiser continuar, sua conta encerra no fim do período pago — simples assim.
       </div>
     </div>
     <div class="faq-item">
@@ -2345,7 +2543,7 @@
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-answer">
-        Sim — em duas coisas fundamentais. Primeiro: o Sandbox de mensagens, único no Brasil, que permite testar cada conversa antes de disparar. Segundo: o Chattie conversa com contexto real, não dispara sequências iguais para todo mundo. Ferramentas de automação genéricas disparam mensagens. O Chattie conversa.
+        Sim — em duas coisas fundamentais. Primeiro: o Sandbox de mensagens, único no Brasil, que permite testar cada conversa antes de disparar. Segundo: o Chattie conversa com contexto real, não dispara sequências iguais para todo mundo. Automações apenas enviam mensagens. O Chattie, conversa.
       </div>
     </div>
     <div class="faq-item">
@@ -2371,6 +2569,7 @@
 
 <!-- ── CTA FINAL ──────────────────────────────────── -->
 <div class="cta-final-wrapper">
+<div class="grain-overlay" style="opacity:0.025;"></div>
 <section class="cta-final">
   <h2 class="cta-final-headline reveal">
     Cada dia sem sistema é uma conversa que você não vai ter.
@@ -2387,10 +2586,10 @@
   </ul>
 
   <a href="#" class="btn btn-black reveal" style="font-size: 1.05rem; padding: 0.85rem 2.5rem; min-height: 56px; border: var(--border-card);">Começar agora →</a>
-  <p class="cta-final-trust reveal">14 dias grátis. Se não gerar nenhuma conversa, cancele sem perguntas.</p>
+  <p class="cta-final-trust reveal">Cancele quando quiser. Sem perguntas, sem burocracia.</p>
 
   <div class="cta-final-micro reveal">
-    <strong>Automação envia mensagens. O Chattie conversa.</strong>
+    <strong>Automações apenas enviam mensagens. O Chattie, conversa.</strong>
     +47 founders B2B já começaram esta semana.
   </div>
 </section>
@@ -2412,7 +2611,7 @@
       </div>
       <div class="footer-col">
         <h4>Empresa</h4>
-        <a href="#">Sobre a TRA</a>
+        <a href="#">About TRA</a>
         <a href="#">Blog</a>
         <a href="#">Carreiras</a>
         <a href="#">Imprensa</a>
@@ -2435,13 +2634,16 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 Chattie. Todos os direitos reservados.</span>
-    <span>Automação envia mensagens. O Chattie conversa. <span class="star-deco">✦</span></span>
+    <span>Automações apenas enviam mensagens. O Chattie, conversa. <span class="star-deco">✦</span></span>
+  </div>
+  <div class="footer-wordmark" aria-hidden="true">
+    <img src="brand_assets/Black Workdmark.png" alt="">
   </div>
 </footer>
 
 <!-- ── MOBILE STICKY CTA ─────────────────────────── -->
 <div class="mobile-sticky-cta" aria-hidden="true">
-  <a href="#pricing" class="btn btn-brand" style="border-color: var(--black);">Começar grátis →</a>
+  <a href="#pricing" class="btn btn-brand" style="border-color: var(--black);">Começar agora →</a>
   <a href="#como-funciona" class="btn btn-outline" style="border-width: 2px;">Como funciona</a>
 </div>
 
@@ -2451,9 +2653,9 @@
 <script>
   /* ── PRICING TOGGLE ─────────────────────────────── */
   const prices = {
-    monthly:   { pro: 'R$ 397', growth: 'R$ 997' },
-    semestral: { pro: 'R$ 357', growth: 'R$ 897' },
-    anual:     { pro: 'R$ 297', growth: 'R$ 748' }
+    monthly:   { pro: 'R$ 397', growth: 'Consultar' },
+    semestral: { pro: 'R$ 357', growth: 'Consultar' },
+    anual:     { pro: 'R$ 318', growth: 'Consultar' }
   };
 
   function setPeriod(period) {
@@ -2529,18 +2731,128 @@
     firstFaq.nextElementSibling.classList.add('open');
   }
 
-  /* ── HERO CHAT ANIMATION ────────────────────────── */
-  (function animHeroChat() {
-    const items = [
-      { id: 'hcm1', delay: 500  },
-      { id: 'hcm2', delay: 1250 },
-      { id: 'hcm3', delay: 2100 },
-      { id: 'hcm4', delay: 3050 },
+  /* ── HERO CHAT ANIMATION — 3-conversation slide carousel ─── */
+  (function animHeroConversations() {
+    const convData = [
+      {
+        slide: 'hc-conv-1',
+        listId: 'hcl-1',
+        avatarInitials: 'CM',
+        avatarClass: 'hc-avatar-teal',
+        name: 'Carlos Medina',
+        meta: 'Q1 Outreach · CEO',
+        copilot: 'Explicar como o Chattie funciona de forma simples →',
+      },
+      {
+        slide: 'hc-conv-2',
+        listId: 'hcl-2',
+        avatarInitials: 'MC',
+        avatarClass: 'hc-avatar-gray',
+        name: 'Mariana Costa',
+        meta: 'Q1 Outreach · Head of Growth',
+        copilot: 'Enviar o case de SaaS B2B como prova →',
+      },
+      {
+        slide: 'hc-conv-3',
+        listId: 'hcl-3',
+        avatarInitials: 'RB',
+        avatarClass: 'hc-avatar-gray',
+        avatarStyle: 'background:rgba(244,177,63,0.2);color:#b87800;',
+        name: 'Ricardo Barros',
+        meta: 'Q1 Outreach · VP Sales',
+        copilot: 'Propor uma demo mostrando integracao com SDR →',
+      },
     ];
-    items.forEach(({ id, delay }) => {
-      const el = document.getElementById(id);
-      if (el) setTimeout(() => el.classList.add('hc-visible'), delay);
-    });
+
+    // Message reveal delays within each conversation (4 msgs + typing = 5 items)
+    const msgDelays = [400, 1400, 2600, 3900, 5400];
+    // How long a conversation plays before sliding to the next
+    const convDuration = 8500; // ms
+
+    let current = 0;
+    let timeouts = [];
+
+    function clearTimeouts() {
+      timeouts.forEach(t => clearTimeout(t));
+      timeouts = [];
+    }
+
+    function updateHeader(data) {
+      const avatar = document.getElementById('hc-header-avatar');
+      const name   = document.getElementById('hc-header-name');
+      const meta   = document.getElementById('hc-header-meta');
+      const copilot = document.getElementById('hc-copilot-text');
+      if (!avatar) return;
+      avatar.textContent = data.avatarInitials;
+      avatar.className   = 'hc-avatar hc-avatar-sm ' + data.avatarClass;
+      if (data.avatarStyle) avatar.style.cssText = data.avatarStyle;
+      else avatar.removeAttribute('style');
+      name.textContent   = data.name;
+      meta.textContent   = data.meta;
+      copilot.textContent = data.copilot;
+    }
+
+    function updateList(activeListId) {
+      convData.forEach(d => {
+        const el = document.getElementById(d.listId);
+        if (!el) return;
+        if (d.listId === activeListId) {
+          el.classList.add('hc-list-contact-active');
+          // Flash animation to signal new active contact
+          el.classList.remove('contact-flash');
+          void el.offsetWidth; // force reflow
+          el.classList.add('contact-flash');
+          setTimeout(() => el.classList.remove('contact-flash'), 1000);
+        } else {
+          el.classList.remove('hc-list-contact-active', 'contact-flash');
+        }
+      });
+    }
+
+    function playConversation(index) {
+      clearTimeouts();
+      const data = convData[index];
+      const prevIndex = (index - 1 + convData.length) % convData.length;
+
+      // Get all slides
+      const slides = convData.map(d => document.getElementById(d.slide));
+
+      // Reset message visibility in upcoming slide
+      const upcomingSlide = slides[index];
+      if (upcomingSlide) {
+        upcomingSlide.querySelectorAll('.hc-reveal').forEach(el => el.classList.remove('hc-visible'));
+      }
+
+      // Exit previous, enter current
+      slides.forEach((sl, i) => {
+        if (!sl) return;
+        sl.classList.remove('slide-active', 'slide-exit');
+        if (i === prevIndex && index !== prevIndex) sl.classList.add('slide-exit');
+        if (i === index) sl.classList.add('slide-active');
+      });
+
+      // Update header + list
+      updateHeader(data);
+      updateList(data.listId);
+
+      // Reveal messages one by one
+      if (upcomingSlide) {
+        const msgs = upcomingSlide.querySelectorAll('.hc-reveal');
+        msgs.forEach((el, i) => {
+          const delay = msgDelays[i] || (msgDelays[msgDelays.length - 1] + i * 1200);
+          timeouts.push(setTimeout(() => el.classList.add('hc-visible'), delay));
+        });
+      }
+
+      // Schedule next conversation
+      timeouts.push(setTimeout(() => {
+        current = (current + 1) % convData.length;
+        playConversation(current);
+      }, convDuration));
+    }
+
+    // Kick off
+    playConversation(0);
   })();
 
   /* ── SCROLL TO TOP ──────────────────────────────── */

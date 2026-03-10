@@ -1768,7 +1768,7 @@
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
+      .hero-right { display: flex; margin-top: 1.5rem; }
       .sandbox-body { grid-template-columns: 1fr; }
       /* Fix sandbox inline grid */
       .sandbox-section > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
@@ -1831,6 +1831,15 @@
       .mobile-sticky-cta .btn { font-size: 0.78rem; padding: 0.55rem 0.7rem; white-space: nowrap; min-width: 0; overflow: hidden; }
       /* PRODUCT SCREENSHOTS: single column */
       .how-screenshots > div { grid-template-columns: 1fr !important; }
+      /* HERO CHAT — mobile: hide nav sidebar, compact layout */
+      .hc-nav { display: none; }
+      .hc-body { grid-template-columns: 112px 1fr; min-height: 300px; }
+      .hc-list-item { padding: 0.42rem 0.55rem; }
+      .hc-list-item-name { font-size: 0.66rem; }
+      .hc-list-item-preview { font-size: 0.6rem; }
+      .hc-msg { font-size: 0.75rem; padding: 0.4rem 0.6rem; max-width: 88%; }
+      .hc-topbar { padding: 0.35rem 0.65rem; gap: 0.3rem; }
+      .hc-url { font-size: 0.62rem; }
     }
   </style>
 </head>
@@ -3048,15 +3057,24 @@
     }
   }
 
-  /* ── AUTO GEO-DETECT: redirect to EN if non-PT browser ─── */
+  /* ── AUTO GEO-DETECT: redirect to EN if user is not in Brazil ─── */
   (function() {
     const override = localStorage.getItem('chattie-lang-override');
-    if (!override) {
-      const lang = navigator.language || navigator.userLanguage || '';
-      if (!lang.toLowerCase().startsWith('pt')) {
-        window.location.href = '/';
-      }
-    }
+    if (override) return;
+    fetch('https://ip-api.com/json/?fields=countryCode', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(data => {
+        if (data.countryCode !== 'BR') {
+          window.location.href = '/';
+        }
+      })
+      .catch(() => {
+        /* fallback: browser language */
+        const lang = navigator.language || '';
+        if (!lang.toLowerCase().startsWith('pt')) {
+          window.location.href = '/';
+        }
+      });
   })();
 
   /* ── SCROLL TO TOP ──────────────────────────────── */

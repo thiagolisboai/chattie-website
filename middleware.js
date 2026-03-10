@@ -1,15 +1,12 @@
 /**
  * Vercel Edge Middleware — Language Geo-Redirect
  *
- * Runs before any HTML is served. Uses Vercel's built-in geo data
- * (request.geo.country) to redirect users to the correct language version.
+ * Uses the x-vercel-ip-country header (injected by Vercel's CDN on every
+ * request, more reliable than request.geo for static site deployments).
  *
  * - BR visitors on /         → redirect to /pt-br/
  * - Non-BR visitors on /pt-br → redirect to /
- * - If the user manually chose a language (chattie-lang cookie), respect it.
- *
- * NOTE: request.cookies is Next.js-only. For a plain static site on Vercel
- * we parse cookies from the raw Cookie header instead.
+ * - Respects chattie-lang cookie (set when user manually switches language).
  */
 
 export const config = {
@@ -18,24 +15,29 @@ export const config = {
 
 export default function middleware(request) {
   const { pathname } = new URL(request.url);
-  const country = request.geo?.country ?? '';
 
-  // Parse cookies from the raw header (standard Web API — works on all Vercel deployments)
+  // x-vercel-ip-country is the most reliable geo source for static Vercel sites
+  const country =
+    request.headers.get('x-vercel-ip-country') ||
+    request.geo?.country ||
+    '';
+
+  // Parse cookies from the raw Cookie header (standard Web API)
   const cookieHeader = request.headers.get('cookie') || '';
   const override = cookieHeader
     .split(';')
     .map(c => c.trim().split('='))
     .find(([k]) => k === 'chattie-lang')?.[1];
 
-  // Respect manual language preference set by setLang() in the HTML
+  // Respect manual language preference — do not override user's choice
   if (override) return;
 
-  // Brazilian visitor hitting the EN root → send to PT
+  // Brazilian visitor on the EN root → send to PT
   if (pathname === '/' && country === 'BR') {
     return Response.redirect(new URL('/pt-br/', request.url), 302);
   }
 
-  // Non-Brazilian visitor hitting the PT page → send to EN
+  // Non-Brazilian visitor on the PT page → send to EN
   if (
     (pathname === '/pt-br' || pathname === '/pt-br/') &&
     country !== '' &&

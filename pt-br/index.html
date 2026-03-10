@@ -3064,11 +3064,11 @@
     }
   }
 
-  /* ── AUTO GEO-DETECT: redirect to EN if user is not in Brazil ─── */
+  /* ── AUTO GEO-DETECT: client-side fallback (middleware.js handles Vercel) ─── */
   (function() {
-    const override = localStorage.getItem('chattie-lang-override');
-    if (override) return;
-    /* api.country.is supports HTTPS on free tier — ip-api.com does not */
+    const cookie = document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith('chattie-lang='));
+    if (cookie) return; // user manually chose a language — respect it
+
     fetch('https://api.country.is/', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => {
@@ -3077,7 +3077,7 @@
         }
       })
       .catch(() => {
-        /* fallback: browser language */
+        /* last-resort fallback: browser language */
         const lang = navigator.language || '';
         if (!lang.toLowerCase().startsWith('pt')) {
           window.location.href = '/';

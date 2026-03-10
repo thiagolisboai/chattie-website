@@ -3054,11 +3054,12 @@
 
   /* ── LANGUAGE SELECTOR ──────────────────────────── */
   function setLang(lang) {
+    // Set cookie (read by Vercel Edge Middleware) + localStorage (client fallback)
+    document.cookie = `chattie-lang=${lang}; path=/; max-age=2592000; SameSite=Lax`;
+    localStorage.setItem('chattie-lang-override', lang);
     if (lang === 'pt') {
-      localStorage.setItem('chattie-lang-override', 'pt');
       window.location.href = '/pt-br/';
     } else {
-      localStorage.setItem('chattie-lang-override', 'en');
       document.querySelectorAll('.nav-lang-opt').forEach(btn => {
         btn.classList.toggle('nav-lang-active', btn.dataset.lang === lang);
       });

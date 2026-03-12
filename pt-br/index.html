@@ -127,6 +127,14 @@
       z-index: 50;
       background: var(--cream);
       border-bottom: var(--border);
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(250, 251, 243, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
     }
     .nav-inner {
       display: flex;
@@ -3172,6 +3180,12 @@
         }
       });
   })();
+
+  /* ── NAV GLASSMORPHISM ON SCROLL ──────────────────── */
+  const nav = document.querySelector('.nav');
+  const updateNav = () => nav.classList.toggle('scrolled', window.scrollY > 10);
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 
   /* ── SCROLL TO TOP ──────────────────────────────── */
   const scrollBtn = document.getElementById('scroll-top-btn');

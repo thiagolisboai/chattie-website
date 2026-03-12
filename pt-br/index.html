@@ -37,7 +37,8 @@
       font-style: normal;
       font-display: swap;
     }
-    html, body { overflow-x: hidden; max-width: 100%; }
+    html { overflow-x: hidden; max-width: 100%; }
+    body { overflow-x: hidden; max-width: 100%; padding-top: 68px; }
     :root {
       --cream:    #FAFBF3;
       --black:    #000000;
@@ -122,19 +123,21 @@
 
     /* ── NAV ────────────────────────────────────── */
     .nav {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 50;
       background: var(--cream);
       border-bottom: var(--border);
-      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
     .nav.scrolled {
-      background: rgba(250, 251, 243, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      background: rgba(250, 251, 243, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
     }
     .nav-inner {
       display: flex;
@@ -2714,7 +2717,7 @@
       </div>
       <p class="price-sub">Para operações com volume alto, licenças múltiplas e Account Manager dedicado.</p>
       <p class="price-scope">Licenças customizadas</p>
-      <p class="scale-trigger">Para quando você tiver 10+ leads qualificados/semana ou 3+ contas LinkedIn</p>
+      <p class="scale-trigger">Para operações que querem escalar a sua aquisição com múltiplas contas</p>
       <hr class="price-divider">
       <ul class="price-features">
         <li><span class="chk">✓</span> Tudo do Growth</li>
@@ -2724,7 +2727,7 @@
         <li><span class="chk">✓</span> SLA garantido</li>
         <li><span class="chk">✓</span> Condições personalizadas</li>
       </ul>
-      <a href="#" class="btn btn-outline price-cta-btn">Falar com o time →</a>
+      <a href="https://cal.com/thiagolisboa/call" target="_blank" class="btn btn-outline price-cta-btn">Falar com o time →</a>
       <p class="price-trust">Preço personalizado · Fale com nossa equipe</p>
     </div>
 

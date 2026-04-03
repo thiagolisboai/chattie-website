@@ -1510,15 +1510,25 @@
       margin-top: 0.15rem;
     }
     .booking-cal-wrap {
-      background: var(--cream);
-      border: var(--border-card);
-      box-shadow: var(--shadow-lg);
-      border-radius: var(--radius);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
       overflow: hidden;
     }
+    .booking-cal-wrap iframe {
+      border: none !important;
+      outline: none !important;
+    }
     .booking-cal-wrap #my-cal-inline-chattie-45min {
-      width: 100%;
+      width: calc(100% + 20px);
       min-height: 680px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+    .booking-cal-wrap #my-cal-inline-chattie-45min::-webkit-scrollbar {
+      display: none;
     }
     @media (max-width: 900px) {
       .booking-inner { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -2931,7 +2941,7 @@
       </ul>
     </div>
     <div class="booking-cal-wrap reveal">
-      <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-chattie-45min"></div>
+      <div style="width:100%;height:100%;overflow:hidden" id="my-cal-inline-chattie-45min"></div>
       <script type="text/javascript">
         (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
         Cal("init", "chattie-45min", {origin:"https://app.cal.com"});
@@ -3330,6 +3340,20 @@
     scrollBtn.addEventListener('animationend', () => scrollBtn.classList.remove('rolling'), { once: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  /* ── CAL.COM SCROLLBAR FALLBACK ─────────────────── */
+  const calContainer = document.getElementById('my-cal-inline-chattie-45min');
+  if (calContainer) {
+    const observer = new MutationObserver(() => {
+      const iframe = calContainer.querySelector('iframe');
+      if (iframe) {
+        iframe.setAttribute('scrolling', 'no');
+        iframe.style.overflow = 'hidden';
+        observer.disconnect();
+      }
+    });
+    observer.observe(calContainer, { childList: true, subtree: true });
+  }
 </script>
 
 </body>

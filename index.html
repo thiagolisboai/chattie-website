@@ -1397,8 +1397,8 @@
     /* ── SCROLL TO TOP ───────────────────────────── */
     #scroll-top-btn {
       position: fixed;
-      bottom: 2rem;
-      left: 2rem;
+      bottom: 20px;
+      left: 20px;
       width: 50px;
       height: 50px;
       background: var(--orange);
@@ -1436,6 +1436,94 @@
       100% { transform: rotate(360deg) scale(1); }
     }
     #scroll-top-btn.rolling { animation: rollUp 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+    /* ── BOOKING SECTION ─────────────────────────── */
+    .booking-section {
+      background: var(--black);
+      padding: 7.5rem 1.5rem;
+      border-bottom: var(--border);
+    }
+    .booking-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.55fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .booking-copy { padding-top: 0.5rem; }
+    .booking-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1.25rem;
+    }
+    .booking-headline {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.75rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .booking-sub {
+      font-family: var(--font);
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .booking-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .booking-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.5;
+    }
+    .booking-chk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: var(--orange);
+      color: var(--black);
+      font-weight: 900;
+      font-size: 0.7rem;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .booking-cal-wrap {
+      background: var(--cream);
+      border: var(--border-card);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .booking-cal-wrap #my-cal-inline-chattie-45min {
+      width: 100%;
+      min-height: 680px;
+    }
+    @media (max-width: 900px) {
+      .booking-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .booking-cal-wrap #my-cal-inline-chattie-45min { min-height: 580px; }
+    }
 
     /* ── PROOF AVATAR ────────────────────────────── */
     .proof-author-inner { display: flex; align-items: center; gap: 0.75rem; }
@@ -2825,6 +2913,35 @@
       <div class="faq-answer">
         English support, by humans, via chat. On Growth and Scale plans, priority support. No tickets, no 48-hour wait.
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOKING ───────────────────────────────────── -->
+<section class="booking-section">
+  <div class="booking-inner">
+    <div class="booking-copy reveal">
+      <p class="booking-eyebrow">◆ TALK TO OUR TEAM</p>
+      <h2 class="booking-headline">See Chattie working — live, with your leads.</h2>
+      <p class="booking-sub">Book a 45-minute call with our team. We'll show the product in action, set up your first campaign, and answer every question you have.</p>
+      <ul class="booking-bullets">
+        <li><span class="booking-chk">✓</span> Real demo with your actual offer and leads</li>
+        <li><span class="booking-chk">✓</span> First campaign live — in the same call</li>
+        <li><span class="booking-chk">✓</span> 45 minutes. No pressure, no obligation.</li>
+      </ul>
+    </div>
+    <div class="booking-cal-wrap reveal">
+      <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-chattie-45min"></div>
+      <script type="text/javascript">
+        (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+        Cal("init", "chattie-45min", {origin:"https://app.cal.com"});
+        Cal.ns["chattie-45min"]("inline", {
+          elementOrSelector:"#my-cal-inline-chattie-45min",
+          config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"dark"},
+          calLink: "thiago-avelino-tra/chattie-45min",
+        });
+        Cal.ns["chattie-45min"]("ui", {"theme":"dark","hideEventTypeDetails":true,"layout":"month_view"});
+      </script>
     </div>
   </div>
 </section>

@@ -35,6 +35,18 @@
     {
       "source": "/authors/:path*",
       "destination": "https://chattie-blog.vercel.app/authors/:path*"
+    },
+    {
+      "source": "/brand/:path*",
+      "destination": "https://chattie-blog.vercel.app/brand/:path*"
+    },
+    {
+      "source": "/fonts/:path*",
+      "destination": "https://chattie-blog.vercel.app/fonts/:path*"
+    },
+    {
+      "source": "/favicon.png",
+      "destination": "https://chattie-blog.vercel.app/favicon.png"
     }
   ]
 }

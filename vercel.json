@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/pt-br/blog/:path*",
+      "destination": "https://chattie-blog.vercel.app/pt-br/blog/:path*"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "https://chattie-blog.vercel.app/blog/:path*"
+    }
+  ]
+}

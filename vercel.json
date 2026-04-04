@@ -31,6 +31,10 @@
     {
       "source": "/blog-robots.txt",
       "destination": "https://chattie-blog.vercel.app/robots.txt"
+    },
+    {
+      "source": "/authors/:path*",
+      "destination": "https://chattie-blog.vercel.app/authors/:path*"
     }
   ]
 }

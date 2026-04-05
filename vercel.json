@@ -49,6 +49,14 @@
       "destination": "https://chattie-blog.vercel.app/favicon.png"
     },
     {
+      "source": "/search-data.json",
+      "destination": "https://chattie-blog.vercel.app/search-data.json"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://chattie-blog.vercel.app/api/:path*"
+    },
+    {
       "source": "/pt-br/recursos/:path*",
       "destination": "https://chattie-blog.vercel.app/pt-br/recursos/:path*"
     },

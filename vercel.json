@@ -21,12 +21,8 @@
       "destination": "https://chattie-blog.vercel.app/_next/:path*"
     },
     {
-      "source": "/sitemap-pt-br.xml",
-      "destination": "https://chattie-blog.vercel.app/sitemap-pt-br.xml"
-    },
-    {
-      "source": "/sitemap-en.xml",
-      "destination": "https://chattie-blog.vercel.app/sitemap-en.xml"
+      "source": "/sitemap.xml",
+      "destination": "https://chattie-blog.vercel.app/sitemap.xml"
     },
     {
       "source": "/blog-robots.txt",

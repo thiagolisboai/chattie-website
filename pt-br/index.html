@@ -3066,7 +3066,7 @@
         if (isNaN(d)) return '';
         return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' });
       }
-      fetch('https://trychattie.com/api/posts.json')
+      fetch('/api/posts.json')
         .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
         .then(function(data) {
           var posts = (data.posts || [])

@@ -3066,12 +3066,15 @@
         if (isNaN(d)) return '';
         return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       }
-      fetch('https://trychattie.com/api/latest-posts?lang=en')
+      fetch('https://trychattie.com/api/posts.json')
         .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
-        .then(function(posts) {
+        .then(function(data) {
+          var posts = (data.posts || [])
+            .filter(function(p) { return p.lang === 'en'; })
+            .slice(0, 3);
           var grid = document.getElementById('blog-strip-grid-en');
           if (!grid || !posts.length) return;
-          grid.innerHTML = posts.slice(0, 3).map(function(p, i) {
+          grid.innerHTML = posts.map(function(p, i) {
             return '<a href="https://trychattie.com/blog/' + p.slug + '" class="blog-strip-card reveal ' + DELAYS[i] + '" target="_blank" rel="noopener">'
               + '<span class="blog-strip-cat" style="background:' + COLORS[i] + ';">' + (p.category || 'Blog') + '</span>'
               + '<h3 class="blog-strip-title">' + p.title + '</h3>'

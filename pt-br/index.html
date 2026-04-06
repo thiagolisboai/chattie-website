@@ -1967,10 +1967,6 @@
       .hc-url { font-size: 0.62rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     }
 
-    /* ── BLOG LINK IN NAV ────────────────────────── */
-    .nav-blog-link { font-weight: 600 !important; color: var(--teal) !important; }
-    .nav-blog-link:hover { color: var(--rust) !important; text-decoration: underline; }
-
     /* ── NEWSLETTER SECTION ──────────────────────── */
     .nl-section { background: #000; padding: 5.5rem 1.5rem; position: relative; overflow: hidden; }
     .nl-deco-corner { position: absolute; top: 0; right: 0; width: 260px; height: 260px; background: var(--rust); clip-path: polygon(100% 0, 100% 100%, 0 0); opacity: 0.07; pointer-events: none; }
@@ -1993,22 +1989,25 @@
     .blog-strip-inner { max-width: 1200px; margin: 0 auto; }
     .blog-strip-header { margin-bottom: 3rem; }
     .blog-strip-headline { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; max-width: 560px; }
-    .blog-strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .blog-strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; min-height: 200px; }
     .blog-strip-card { border: 2px solid #000; box-shadow: 4px 4px 0 #000; background: #fff; padding: 1.75rem; text-decoration: none; color: #000; display: flex; flex-direction: column; gap: 0.85rem; transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s, border-color 0.15s; }
     .blog-strip-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--teal); border-color: var(--teal); }
     .blog-strip-cat { display: inline-block; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.22rem 0.65rem; border: 1.5px solid rgba(0,0,0,0.12); align-self: flex-start; }
     .blog-strip-title { font-family: var(--font-display); font-size: 1rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.01em; flex: 1; }
     .blog-strip-desc { font-size: 0.85rem; color: #555; line-height: 1.6; }
+    .blog-strip-date { font-size: 0.75rem; font-weight: 600; color: #999; letter-spacing: 0.03em; }
     .blog-strip-read { font-size: 0.82rem; font-weight: 700; color: var(--teal); transition: color 0.15s; }
     .blog-strip-card:hover .blog-strip-read { color: var(--rust); }
     .blog-strip-cta { text-align: center; }
     @media (max-width: 900px) {
       .nl-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .blog-strip-grid { grid-template-columns: 1fr; }
+      .blog-strip-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 600px) {
       .nl-section { padding: 4rem 1.25rem; }
       .blog-strip { padding: 4rem 1.25rem; }
+      .blog-strip-grid { grid-template-columns: 1fr; }
+      .blog-strip-headline { font-size: clamp(1.5rem, 6vw, 1.9rem); }
     }
   </style>
 </head>
@@ -2023,7 +2022,7 @@
     <ul class="nav-links">
       <li><a href="#como-funciona">Como funciona</a></li>
       <li><a href="#pricing">Preços</a></li>
-      <li><a href="https://trychattie.com/pt-br/blog" class="nav-blog-link" target="_blank">Blog</a></li>
+      <li><a href="https://trychattie.com/pt-br/blog">Blog</a></li>
     </ul>
     <div class="nav-actions">
       <div class="nav-lang" role="group" aria-label="Selecionar idioma">
@@ -3056,26 +3055,35 @@
       <p class="section-eyebrow" style="color: var(--teal);">Do Blog</p>
       <h2 class="blog-strip-headline">Inteligência prática sobre LinkedIn B2B.</h2>
     </div>
-    <div class="blog-strip-grid">
-      <a href="https://trychattie.com/pt-br/blog/automacao-linkedin-o-que-e-permitido" class="blog-strip-card reveal reveal-d1" target="_blank" rel="noopener">
-        <span class="blog-strip-cat" style="background: var(--lavender);">LinkedIn</span>
-        <h3 class="blog-strip-title">Automação no LinkedIn: O Que é Permitido e o Que Pode Banir Sua Conta</h3>
-        <p class="blog-strip-desc">O que o LinkedIn permite, o que é arriscado e o que já foi banido — um guia definitivo para não perder sua conta.</p>
-        <span class="blog-strip-read">Ler artigo →</span>
-      </a>
-      <a href="https://trychattie.com/pt-br/blog/chattie-vs-waalaxy" class="blog-strip-card reveal reveal-d2" target="_blank" rel="noopener">
-        <span class="blog-strip-cat" style="background: var(--orange);">Comparativos</span>
-        <h3 class="blog-strip-title">Chattie vs Waalaxy: qual usar para prospecção no LinkedIn em 2026?</h3>
-        <p class="blog-strip-desc">Comparativo honesto entre as duas ferramentas: automação, personalização, preço e o que cada uma faz melhor.</p>
-        <span class="blog-strip-read">Ler artigo →</span>
-      </a>
-      <a href="https://trychattie.com/pt-br/blog/como-otimizar-perfil-linkedin-para-vendas-b2b" class="blog-strip-card reveal reveal-d3" target="_blank" rel="noopener">
-        <span class="blog-strip-cat" style="background: var(--cyan);">LinkedIn</span>
-        <h3 class="blog-strip-title">Como Otimizar seu Perfil do LinkedIn para Vendas B2B em 2026</h3>
-        <p class="blog-strip-desc">Foto, headline, sobre, experiência e featured — o que muda em cada seção para gerar mais conversas.</p>
-        <span class="blog-strip-read">Ler artigo →</span>
-      </a>
-    </div>
+    <div class="blog-strip-grid" id="blog-strip-grid-pt"></div>
+    <script>
+    (function() {
+      var COLORS = ['var(--lavender)', 'var(--orange)', 'var(--cyan)'];
+      var DELAYS = ['reveal-d1', 'reveal-d2', 'reveal-d3'];
+      function fmtDate(str) {
+        if (!str) return '';
+        var d = new Date(str);
+        if (isNaN(d)) return '';
+        return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' });
+      }
+      fetch('https://trychattie.com/api/latest-posts?lang=pt')
+        .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function(posts) {
+          var grid = document.getElementById('blog-strip-grid-pt');
+          if (!grid || !posts.length) return;
+          grid.innerHTML = posts.slice(0, 3).map(function(p, i) {
+            return '<a href="https://trychattie.com/pt-br/blog/' + p.slug + '" class="blog-strip-card reveal ' + DELAYS[i] + '" target="_blank" rel="noopener">'
+              + '<span class="blog-strip-cat" style="background:' + COLORS[i] + ';">' + (p.category || 'Blog') + '</span>'
+              + '<h3 class="blog-strip-title">' + p.title + '</h3>'
+              + '<p class="blog-strip-desc">' + p.description + '</p>'
+              + '<span class="blog-strip-date">' + fmtDate(p.date) + '</span>'
+              + '<span class="blog-strip-read">Ler artigo →</span>'
+              + '</a>';
+          }).join('');
+        })
+        .catch(function() {});
+    })();
+    </script>
     <div class="blog-strip-cta reveal">
       <a href="https://trychattie.com/pt-br/blog" class="btn btn-outline" target="_blank" rel="noopener">Ver todos os artigos do blog →</a>
     </div>

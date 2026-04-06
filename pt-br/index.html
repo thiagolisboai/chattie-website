@@ -3062,9 +3062,11 @@
       var DELAYS = ['reveal-d1', 'reveal-d2', 'reveal-d3'];
       function fmtDate(str) {
         if (!str) return '';
-        var d = new Date(str);
-        if (isNaN(d)) return '';
-        return d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' });
+        var p = str.split('-');
+        if (p.length < 3) return str;
+        var months = ['jan.','fev.','mar.','abr.','mai.','jun.','jul.','ago.','set.','out.','nov.','dez.'];
+        var m = parseInt(p[1], 10) - 1;
+        return parseInt(p[2], 10) + ' de ' + months[m] + ' de ' + p[0];
       }
       fetch('/api/posts.json')
         .then(function(r) { return r.ok ? r.json() : Promise.reject(); })

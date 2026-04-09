@@ -3047,7 +3047,7 @@
           var grid = document.getElementById('blog-strip-grid-en');
           if (!grid || !posts.length) return;
           grid.innerHTML = posts.map(function(p, i) {
-            return '<a href="https://trychattie.com/blog/' + p.slug + '" class="blog-strip-card reveal ' + DELAYS[i] + '" target="_blank" rel="noopener">'
+            return '<a href="https://trychattie.com/blog/' + p.slug + '" class="blog-strip-card reveal ' + DELAYS[i] + '">'
               + '<span class="blog-strip-cat" style="background:' + COLORS[i] + ';">' + (p.category || 'Blog') + '</span>'
               + '<h3 class="blog-strip-title">' + p.title + '</h3>'
               + '<p class="blog-strip-desc">' + p.description + '</p>'

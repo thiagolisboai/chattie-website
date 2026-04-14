@@ -25,8 +25,16 @@
       "destination": "https://chattie-blog.vercel.app/sitemap.xml"
     },
     {
+      "source": "/sitemap-hreflang.xml",
+      "destination": "https://chattie-blog.vercel.app/sitemap-hreflang.xml"
+    },
+    {
       "source": "/baf709637be156f6ff9c5959bddb4b8d.txt",
       "destination": "https://chattie-blog.vercel.app/baf709637be156f6ff9c5959bddb4b8d.txt"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "https://chattie-blog.vercel.app/robots.txt"
     },
     {
       "source": "/blog-robots.txt",

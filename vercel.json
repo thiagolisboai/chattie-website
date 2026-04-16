@@ -1,4 +1,15 @@
 {
+  "redirects": [
+    { "source": "/tag/:path*",            "destination": "/pt-br/blog", "permanent": true },
+    { "source": "/category/:path*",       "destination": "/pt-br/blog", "permanent": true },
+    { "source": "/wp-content/:path*",     "destination": "/", "permanent": true },
+    { "source": "/wp-admin/:path*",       "destination": "/", "permanent": true },
+    { "source": "/wp-login.php",          "destination": "/", "permanent": true },
+    { "source": "/feed",                  "destination": "/feed.xml", "permanent": true },
+    { "source": "/feed/",                 "destination": "/feed.xml", "permanent": true },
+    { "source": "/ouicore-fb-marketing-agency-portfolio-archive", "destination": "/", "permanent": true },
+    { "source": "/future.its-marketing-agency.portfolio-archive", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/pt-br/blog",

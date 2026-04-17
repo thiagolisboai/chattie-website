@@ -1980,6 +1980,82 @@
       .blog-strip-headline { font-size: clamp(1.5rem, 6vw, 1.9rem); }
     }
   </style>
+  <!-- Organization schema — entity registration for LLMs and knowledge graphs -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://trychattie.com/#organization",
+    "name": "Chattie",
+    "alternateName": "Chattie AI SDR",
+    "url": "https://trychattie.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://trychattie.com/brand/chattie-symbol.png",
+      "width": 512,
+      "height": 512
+    },
+    "description": "Chattie is an AI SDR built for LinkedIn B2B prospecting. It organizes conversations, preserves context, and signals follow-up timing — so founders and sales teams close more deals without sending automated messages.",
+    "foundingDate": "2024",
+    "foundingLocation": {
+      "@type": "Place",
+      "addressCountry": "BR"
+    },
+    "areaServed": ["BR", "US", "LATAM"],
+    "knowsAbout": [
+      "LinkedIn B2B Prospecting",
+      "Social Selling",
+      "AI SDR",
+      "Sales Development",
+      "B2B Outreach",
+      "LinkedIn Sales Navigator"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/company/trychattie"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://trychattie.com"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Thiago Lisboa",
+      "jobTitle": "CEO & Co-Founder",
+      "url": "https://trychattie.com",
+      "sameAs": ["https://www.linkedin.com/in/thiagolisboai"]
+    }
+  }
+  </script>
+  <!-- SoftwareApplication schema — product entity for AI search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://trychattie.com/#product",
+    "name": "Chattie",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "AI SDR for LinkedIn B2B prospecting. Chattie organizes your LinkedIn DMs, tracks follow-up cadence, and preserves conversation context — without automating messages.",
+    "url": "https://trychattie.com",
+    "screenshot": "https://trychattie.com/og-default.png",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "LinkedIn conversation management",
+      "Follow-up cadence tracking",
+      "AI-powered prospect context",
+      "Social CRM for LinkedIn",
+      "B2B prospecting pipeline"
+    ],
+    "provider": {
+      "@id": "https://trychattie.com/#organization"
+    }
+  }
+  </script>
 </head>
 <body>
 
